@@ -1,4 +1,4 @@
 CoreDataContext
 ===============
 
-Core Data helpers
+Core Data helpers for CoreData automigration and multi threading.
