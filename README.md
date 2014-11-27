@@ -1,0 +1,4 @@
+CoreDataContext
+===============
+
+Core Data helpers
