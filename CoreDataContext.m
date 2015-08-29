@@ -1,6 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 // For more information, please refer to <http://unlicense.org/>
 
+#import <UIKit/UIKit.h>
 #import "CoreDataContext.h"
 
 static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::currentThreadManagedObjectContext";
@@ -187,7 +188,11 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
 {
     NSError *error = nil;
     NSURL *storeURL = [self urlOfPersistentStore];
+#ifdef __IPHONE_9_0
+    NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType URL:storeURL options:nil error:&error];
+#else
     NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType URL:storeURL error:&error];
+#endif
     
     if (storeMetadata == nil) {
         return NO;
