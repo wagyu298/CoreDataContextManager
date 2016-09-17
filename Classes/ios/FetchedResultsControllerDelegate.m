@@ -9,15 +9,32 @@ https://developer.apple.com/library/ios/documentation/CoreData/Reference/NSFetch
 
 #import "FetchedResultsControllerDelegate.h"
 
+@interface FetchedResultsControllerDelegate ()
+
+@property (nonatomic, nonnull, strong) NSMutableArray *insertedSections;
+@property (nonatomic, nonnull, strong) NSMutableArray *deletedSections;
+@property (nonatomic) BOOL isIOS10;
+
+@end
+
 @implementation FetchedResultsControllerDelegate
 
-- (id)initWithTableView:(UITableView *)tableView
+- (id)initWithTableView:(UITableView *)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation
 {
     self = [super init];
     if (self) {
         self.tableView = tableView;
+        self.rowAnimation = rowAnimation;
+        self.insertedSections = [[NSMutableArray alloc] init];
+        self.deletedSections = [[NSMutableArray alloc] init];
+        self.isIOS10 = [[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending;
     }
     return self;
+}
+
+- (id)initWithTableView:(UITableView *)tableView
+{
+    return [self initWithTableView:tableView rowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 /*
@@ -35,13 +52,15 @@ with information from a managed object at the given index path in the fetched re
 {
     switch(type) {
         case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:self.rowAnimation];
+            [self.insertedSections addObject:@(sectionIndex)];
             break;
-            
+
         case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:self.rowAnimation];
+            [self.deletedSections addObject:@(sectionIndex)];
             break;
-            
+
         case NSFetchedResultsChangeUpdate:
             break;
         case NSFetchedResultsChangeMove:
@@ -52,10 +71,10 @@ with information from a managed object at the given index path in the fetched re
 - (BOOL)canUpdateWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
 {
     NSObject <UITableViewDataSource> *dataSource = tableView.dataSource;
-    
+
     if (dataSource == nil || ![dataSource conformsToProtocol:@protocol(FetchedResultsControllerDelegateDataSource)]) {
         return NO;
-        
+
     } else {
         NSInteger sections = 1;
         if ([dataSource respondsToSelector:@selector(numberOfSectionsInTableView:)]) {
@@ -75,35 +94,47 @@ with information from a managed object at the given index path in the fetched re
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
     UITableView *tableView = self.tableView;
-    
+
     switch(type) {
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:self.rowAnimation];
             break;
-            
+
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:self.rowAnimation];
             break;
-            
+
         case NSFetchedResultsChangeUpdate:
-            if ([self canUpdateWithTableView:tableView indexPath:indexPath]) {
-                NSObject <FetchedResultsControllerDelegateDataSource> *dataSource = (NSObject <FetchedResultsControllerDelegateDataSource> *)tableView.dataSource;
-                UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-                if (cell != nil) {
-                    [dataSource configureCell:cell atIndexPath:indexPath];
+            if (!(self.isIOS10 && indexPath != nil && newIndexPath != nil && ![indexPath isEqual:newIndexPath])) {
+                if ([self.insertedSections containsObject:@(indexPath.section)] ||
+                    [self.deletedSections containsObject:@(indexPath.section)]) {
+                    return;
                 }
+
+                if ([self canUpdateWithTableView:tableView indexPath:indexPath]) {
+                    NSObject <FetchedResultsControllerDelegateDataSource> *dataSource = (NSObject <FetchedResultsControllerDelegateDataSource> *)tableView.dataSource;
+                    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+                    if (cell != nil) {
+                        [dataSource configureCell:cell atIndexPath:indexPath];
+                    }
+                }
+                break;
             }
-            break;
-            
+            /* FALLTHRU */
+
         case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if (![self.deletedSections containsObject:@(indexPath.section)]) {
+                [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:self.rowAnimation];
+            }
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:self.rowAnimation];
             break;
     }
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
+    [self.insertedSections removeAllObjects];
+    [self.deletedSections removeAllObjects];
     [self.tableView endUpdates];
 }
 

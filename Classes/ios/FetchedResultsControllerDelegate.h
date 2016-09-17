@@ -14,7 +14,9 @@
 @interface FetchedResultsControllerDelegate : NSObject <NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic) UITableViewRowAnimation rowAnimation;
 
+- (id)initWithTableView:(UITableView *)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation;
 - (id)initWithTableView:(UITableView *)tableView;
 
 @end
