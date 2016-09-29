@@ -123,10 +123,15 @@ with information from a managed object at the given index path in the fetched re
             /* FALLTHRU */
 
         case NSFetchedResultsChangeMove:
+            if (!indexPath || !newIndexPath || [indexPath isEqual:newIndexPath]) {
+                return;
+            }
             if (![self.deletedSections containsObject:@(indexPath.section)]) {
                 [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:self.rowAnimation];
             }
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:self.rowAnimation];
+            if (![self.insertedSections containsObject:@(newIndexPath.section)]) {
+                [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:self.rowAnimation];
+            }
             break;
     }
 }
