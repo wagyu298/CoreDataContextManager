@@ -5,6 +5,6 @@
 
 @interface NSManagedObjectContext (BackgroundThread)
 
-- (NSManagedObjectContext *)createChildContext;
+- (NSManagedObjectContext * _Nonnull)createChildContext;
 
 @end

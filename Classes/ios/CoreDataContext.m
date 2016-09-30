@@ -6,29 +6,49 @@
 
 static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::currentThreadManagedObjectContext";
 
+@interface CoreDataContext ()
+
+@property (nonnull, nonatomic, strong) NSString *databaseName;
+@property (nonnull, nonatomic, strong) NSString *storeType;
+@property (nonnull, nonatomic, strong) NSURL *persistentStoreURL;
+
+@end
+
 @implementation CoreDataContext
 
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
-@synthesize databaseName = _databaseName;
-@synthesize directory = _directory;
-
-- (id)initWithDatabaseName:(NSString *)databaseName directory:(NSURL *)directory
-{
+- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType {
     self = [super init];
     if (self) {
-        _databaseName = databaseName;
+        self.databaseName = databaseName;
+        self.storeType = storeType;
+        
+        NSURL *directoryURL;
         if (directory == nil) {
-            _directory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+            directoryURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
         } else {
-            _directory = directory;
+            directoryURL = directory;
         }
         
-        // Core data auto migration
-        if ([self shouldPerformCoreDataMigration]) {
-            [self performMigration];
+        if (![self.storeType isEqualToString:NSInMemoryStoreType]) {
+            NSString *filename;
+            if ([self.storeType isEqualToString:NSSQLiteStoreType]) {
+                filename = [NSString stringWithFormat:@"%@.sqlite", databaseName];
+            } else if ([self.storeType isEqualToString:NSBinaryStoreType]) {
+                filename = [NSString stringWithFormat:@"%@.binary", databaseName];
+            } else {
+                filename = databaseName;    // Unknown store type
+            }
+            
+            self.persistentStoreURL = [directoryURL URLByAppendingPathComponent:filename];
+            
+            // Core data auto migration
+            if ([self shouldPerformCoreDataMigration]) {
+                [self performMigration];
+            }
         }
         
         // Instanciate main thread object context
@@ -40,21 +60,22 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
     return self;
 }
 
-- (id)initWithDatabaseName:(NSString *)databaseName
-{
-    return [self initWithDatabaseName:databaseName directory:nil];
+- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType {
+    return [self initWithDatabaseName:databaseName directory:nil storeType:storeType];
 }
 
-- (void)dealloc
-{
+- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName {
+    return [self initWithDatabaseName:databaseName storeType:NSSQLiteStoreType];
+}
+
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
 }
 
 #pragma mark - Notification Handlers
 
-- (void)didEnterBackgroundNotification:(NSNotification *)notification
-{
+- (void)didEnterBackgroundNotification:(NSNotification *)notification {
     NSError *error = nil;
     if ([__managedObjectContext hasChanges] && ![__managedObjectContext save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
@@ -64,8 +85,7 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
     }
 }
 
-- (void)didSaveNotification:(NSNotification *)notification
-{
+- (void)didSaveNotification:(NSNotification *)notification {
     NSManagedObjectContext *context = notification.object;
     if (context != __managedObjectContext && context.parentContext == __managedObjectContext) {
         [__managedObjectContext performBlock:^{
@@ -82,8 +102,7 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
 
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-- (NSManagedObjectContext *)managedObjectContext
-{
+- (NSManagedObjectContext * _Nonnull)managedObjectContext {
     if (__managedObjectContext != nil) {
         return __managedObjectContext;
     }
@@ -98,13 +117,11 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
     return __managedObjectContext;
 }
 
-- (NSManagedObjectContext *)createBackgroundContext
-{
+- (NSManagedObjectContext * _Nonnull)createBackgroundContext {
     return [self.managedObjectContext createChildContext];
 }
 
-- (NSManagedObjectContext *)currentManagedObjectContext
-{
+- (NSManagedObjectContext * _Nonnull)currentManagedObjectContext {
     if ([NSThread isMainThread]) {
         return self.managedObjectContext;
     } else {
@@ -114,36 +131,25 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
 
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.
-- (NSManagedObjectModel *)managedObjectModel
-{
+- (NSManagedObjectModel * _Nonnull)managedObjectModel {
     if (__managedObjectModel != nil) {
         return __managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:_databaseName withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:self.databaseName withExtension:@"momd"];
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return __managedObjectModel;
 }
 
-// Returns the URL of persistent store.
-- (NSURL *)urlOfPersistentStore
-{
-    NSString *filename = [NSString stringWithFormat:@"%@.sqlite", _databaseName];
-    return [_directory URLByAppendingPathComponent:filename];
-}
-
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinatorWithOption:(NSDictionary *)options
-{
+- (NSPersistentStoreCoordinator * _Nonnull)persistentStoreCoordinatorWithOption:(NSDictionary * _Nullable)options {
     if (__persistentStoreCoordinator != nil) {
         return __persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [self urlOfPersistentStore];
-    
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
+    if (![__persistentStoreCoordinator addPersistentStoreWithType:self.storeType configuration:nil URL:self.persistentStoreURL options:options error:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
          
@@ -176,22 +182,19 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
 
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
+- (NSPersistentStoreCoordinator * _Nonnull)persistentStoreCoordinator {
     return [self persistentStoreCoordinatorWithOption:nil];
 }
 
 #pragma mark - Auto migration
 
 // Returns YES if Core Data needs to migration.
-- (BOOL)shouldPerformCoreDataMigration
-{
+- (BOOL)shouldPerformCoreDataMigration {
     NSError *error = nil;
-    NSURL *storeURL = [self urlOfPersistentStore];
 #ifdef __IPHONE_9_0
-    NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType URL:storeURL options:nil error:&error];
+    NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType URL:self.persistentStoreURL options:nil error:&error];
 #else
-    NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType URL:storeURL error:&error];
+    NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType URL:self.persistentStoreURL error:&error];
 #endif
     
     if (storeMetadata == nil) {
@@ -203,8 +206,7 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
 }
 
 // Perform Core Data automatic lightweight migration.
-- (void)performMigration
-{
+- (void)performMigration {
     __persistentStoreCoordinator = nil;
     NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:[[NSNumber alloc] initWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [[NSNumber alloc] initWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
     [self persistentStoreCoordinatorWithOption:options];

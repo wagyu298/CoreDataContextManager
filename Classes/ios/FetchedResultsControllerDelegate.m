@@ -11,16 +11,15 @@ https://developer.apple.com/library/ios/documentation/CoreData/Reference/NSFetch
 
 @interface FetchedResultsControllerDelegate ()
 
-@property (nonatomic, nonnull, strong) NSMutableArray *insertedSections;
-@property (nonatomic, nonnull, strong) NSMutableArray *deletedSections;
+@property (nonnull, nonatomic, strong) NSMutableArray *insertedSections;
+@property (nonnull, nonatomic, strong) NSMutableArray *deletedSections;
 @property (nonatomic) BOOL isIOS10;
 
 @end
 
 @implementation FetchedResultsControllerDelegate
 
-- (id)initWithTableView:(UITableView *)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation
-{
+- (id)initWithTableView:(UITableView * _Nonnull)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation {
     self = [super init];
     if (self) {
         self.tableView = tableView;
@@ -32,8 +31,7 @@ https://developer.apple.com/library/ios/documentation/CoreData/Reference/NSFetch
     return self;
 }
 
-- (id)initWithTableView:(UITableView *)tableView
-{
+- (id)initWithTableView:(UITableView *  _Nonnull)tableView {
     return [self initWithTableView:tableView rowAnimation:UITableViewRowAnimationAutomatic];
 }
 
@@ -43,13 +41,11 @@ subclass -- and a method configureCell:atIndexPath: which updates the contents o
 with information from a managed object at the given index path in the fetched results controller.
 */
 
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView beginUpdates];
 }
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:self.rowAnimation];
@@ -68,8 +64,7 @@ with information from a managed object at the given index path in the fetched re
     }
 }
 
-- (BOOL)canUpdateWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
-{
+- (BOOL)canUpdateWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
     NSObject <UITableViewDataSource> *dataSource = tableView.dataSource;
 
     if (dataSource == nil || ![dataSource conformsToProtocol:@protocol(FetchedResultsControllerDelegateDataSource)]) {
