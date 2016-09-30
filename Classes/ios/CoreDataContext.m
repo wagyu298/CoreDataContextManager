@@ -20,7 +20,7 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
-- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType {
+- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType {
     self = [super init];
     if (self) {
         self.databaseName = databaseName;
@@ -60,11 +60,11 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
     return self;
 }
 
-- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType {
+- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType {
     return [self initWithDatabaseName:databaseName directory:nil storeType:storeType];
 }
 
-- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName {
+- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName {
     return [self initWithDatabaseName:databaseName storeType:NSSQLiteStoreType];
 }
 

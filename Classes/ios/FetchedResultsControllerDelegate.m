@@ -19,7 +19,7 @@ https://developer.apple.com/library/ios/documentation/CoreData/Reference/NSFetch
 
 @implementation FetchedResultsControllerDelegate
 
-- (id)initWithTableView:(UITableView * _Nonnull)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation {
+- (instancetype)initWithTableView:(UITableView * _Nonnull)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation {
     self = [super init];
     if (self) {
         self.tableView = tableView;
@@ -31,7 +31,7 @@ https://developer.apple.com/library/ios/documentation/CoreData/Reference/NSFetch
     return self;
 }
 
-- (id)initWithTableView:(UITableView *  _Nonnull)tableView {
+- (instancetype)initWithTableView:(UITableView *  _Nonnull)tableView {
     return [self initWithTableView:tableView rowAnimation:UITableViewRowAnimationAutomatic];
 }
 
