@@ -13,10 +13,8 @@
 @property (nonnull, nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonnull, nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (nullable, nonatomic, strong, readonly) NSString *databaseName;
-@property (nullable, nonatomic, strong, readonly) NSURL *directory;
-
-- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nonnull)directory;
+- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType;
+- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType;
 - (id)initWithDatabaseName:(NSString * _Nonnull)databaseName;
 
 - (NSManagedObjectContext * _Nonnull)createBackgroundContext;
