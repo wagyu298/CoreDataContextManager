@@ -7,16 +7,16 @@
 @protocol FetchedResultsControllerDelegateDataSource <UITableViewDataSource>
 
 @required
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)configureCell:(UITableViewCell * _Nonnull)cell atIndexPath:(NSIndexPath * _Nonnull)indexPath;
 
 @end
 
 @interface FetchedResultsControllerDelegate : NSObject <NSFetchedResultsControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nullable, nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic) UITableViewRowAnimation rowAnimation;
 
-- (id)initWithTableView:(UITableView *)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation;
-- (id)initWithTableView:(UITableView *)tableView;
+- (id)initWithTableView:(UITableView * _Nonnull)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation;
+- (id)initWithTableView:(UITableView * _Nonnull)tableView;
 
 @end

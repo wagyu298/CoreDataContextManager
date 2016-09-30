@@ -8,18 +8,18 @@
 
 @interface CoreDataContext : NSObject
 
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSURL *urlOfPersistentStore;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonnull, nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonnull, nonatomic, strong, readonly) NSURL *urlOfPersistentStore;
+@property (nonnull, nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
+@property (nonnull, nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (readonly, strong, nonatomic) NSString *databaseName;
-@property (readonly, strong, nonatomic) NSURL *directory;
+@property (nullable, nonatomic, strong, readonly) NSString *databaseName;
+@property (nullable, nonatomic, strong, readonly) NSURL *directory;
 
-- (id)initWithDatabaseName:(NSString *)databaseName directory:(NSURL *)directory;
-- (id)initWithDatabaseName:(NSString *)databaseName;
+- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nonnull)directory;
+- (id)initWithDatabaseName:(NSString * _Nonnull)databaseName;
 
-- (NSManagedObjectContext *)createBackgroundContext;
-- (NSManagedObjectContext *)currentManagedObjectContext;
+- (NSManagedObjectContext * _Nonnull)createBackgroundContext;
+- (NSManagedObjectContext * _Nonnull)currentManagedObjectContext;
 
 @end
