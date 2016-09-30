@@ -4,6 +4,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "NSManagedObjectContext+BackgroundThread.h"
+#import "FetchedResultsControllerDelegate.h"
 
 @interface CoreDataContext : NSObject
 
