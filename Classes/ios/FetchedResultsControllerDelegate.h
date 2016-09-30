@@ -16,7 +16,7 @@
 @property (nullable, nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic) UITableViewRowAnimation rowAnimation;
 
-- (id)initWithTableView:(UITableView * _Nonnull)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation;
-- (id)initWithTableView:(UITableView * _Nonnull)tableView;
+- (instancetype _Nonnull)initWithTableView:(UITableView * _Nonnull)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation;
+- (instancetype _Nonnull)initWithTableView:(UITableView * _Nonnull)tableView;
 
 @end
