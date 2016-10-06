@@ -34,8 +34,9 @@ If you already enabled CoreData with Xcode default templates, remove entire code
 @end
 ```
 
-You should pass a model file name prefix to `initWithDatabaseName:`.
-If you create `MyDatabase.xcdatamodeld`, call with `initWithDatabaseName:@"MyDatabase"`.
+You should pass a model file name prefix to the constructor method `[[CoreDataContext alloc] initWithDatabaseName:]`.
+
+If you create the model file that named `MyDatabase.xcdatamodeld`, call the method like `[context initWithDatabaseName:@"MyDatabase"]`.
 
 ## Features
 
@@ -51,7 +52,7 @@ You can add model version from Xcode menu `Editor -> Add Model Version...`.
 
 ### Multi threading
 
-You can create NSManagedObjectContext for none-UI thread by `[CoreDataContext createBackgroundContext]` method.
+You can create NSManagedObjectContext for none-UI thread by `[context createBackgroundContext]` method.
 
 ```
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
