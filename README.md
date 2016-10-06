@@ -35,7 +35,6 @@ If you already enabled CoreData with Xcode default templates, remove entire code
 ```
 
 You should pass a model file name prefix to the constructor method `[[CoreDataContext alloc] initWithDatabaseName:]`.
-
 If you create the model file that named `MyDatabase.xcdatamodeld`, call the method like `[context initWithDatabaseName:@"MyDatabase"]`.
 
 ## Features
