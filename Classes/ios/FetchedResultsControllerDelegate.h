@@ -13,6 +13,8 @@
 
 @interface FetchedResultsControllerDelegate : NSObject <NSFetchedResultsControllerDelegate>
 
++ (void)setDefaultRowAnimation:(UITableViewRowAnimation)rowAnimation;
+
 @property (nullable, nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic) UITableViewRowAnimation rowAnimation;
 
