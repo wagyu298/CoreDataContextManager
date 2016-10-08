@@ -118,7 +118,7 @@ static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::
 }
 
 - (NSManagedObjectContext * _Nonnull)createBackgroundContext {
-    return [self.managedObjectContext createChildContext];
+    return [self.managedObjectContext createChildManagedObjectContext];
 }
 
 - (NSManagedObjectContext * _Nonnull)currentManagedObjectContext {

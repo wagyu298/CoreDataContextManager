@@ -5,7 +5,7 @@
 
 @implementation NSManagedObjectContext (BackgroundThread)
 
-- (NSManagedObjectContext * _Nonnull)createChildContext
+- (NSManagedObjectContext * _Nonnull)createChildManagedObjectContext
 {
     NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     NSManagedObjectContext *parentContext = self.parentContext;
