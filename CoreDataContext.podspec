@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CoreDataContext"
-  s.version      = "0.0.5"
-  s.summary      = "Core Data helpers for CoreData automigration and multi threading."
+  s.version      = "0.0.6"
+  s.summary      = "CoreData helpers for database auto-migration and multi threading ."
 
   s.description  = <<-DESC
                    A longer description of CoreDataContext in Markdown format.
