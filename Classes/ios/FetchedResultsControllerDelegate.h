@@ -7,7 +7,7 @@
 @protocol FetchedResultsControllerDelegateDataSource <UITableViewDataSource>
 
 @required
-- (void)configureCell:(UITableViewCell * _Nonnull)cell atIndexPath:(NSIndexPath * _Nonnull)indexPath;
+- (void)configureCell:(UITableViewCell * _Nonnull)cell atIndexPath:(NSIndexPath * _Nullable)indexPath;
 
 @end
 
