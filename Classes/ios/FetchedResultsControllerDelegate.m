@@ -10,12 +10,12 @@ https://developer.apple.com/library/ios/documentation/CoreData/Reference/NSFetch
 #import "FetchedResultsControllerDelegate.h"
 
 static UITableViewRowAnimation defaultRowAnimation = UITableViewRowAnimationAutomatic;
+static BOOL isIOS10;
 
 @interface FetchedResultsControllerDelegate ()
 
 @property (nonnull, nonatomic, strong) NSMutableArray *insertedSections;
 @property (nonnull, nonatomic, strong) NSMutableArray *deletedSections;
-@property (nonatomic) BOOL isIOS10;
 
 @end
 
@@ -29,11 +29,14 @@ static UITableViewRowAnimation defaultRowAnimation = UITableViewRowAnimationAuto
 - (instancetype)initWithTableView:(UITableView * _Nonnull)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation {
     self = [super init];
     if (self) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            isIOS10 = [[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending;
+        });
         self.tableView = tableView;
         self.rowAnimation = rowAnimation;
         self.insertedSections = [[NSMutableArray alloc] init];
         self.deletedSections = [[NSMutableArray alloc] init];
-        self.isIOS10 = [[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending;
     }
     return self;
 }
@@ -97,7 +100,7 @@ with information from a managed object at the given index path in the fetched re
 {
     UITableView *tableView = self.tableView;
     
-    if (type == NSFetchedResultsChangeUpdate && self.isIOS10 && indexPath != nil && newIndexPath != nil) {
+    if (type == NSFetchedResultsChangeUpdate && isIOS10 && indexPath != nil && newIndexPath != nil) {
         if (![indexPath isEqual:newIndexPath] ||
             [self.insertedSections containsObject:@(indexPath.section)] ||
             [self.deletedSections containsObject:@(indexPath.section)]) {
