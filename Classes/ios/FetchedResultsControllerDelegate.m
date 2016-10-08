@@ -9,6 +9,8 @@ https://developer.apple.com/library/ios/documentation/CoreData/Reference/NSFetch
 
 #import "FetchedResultsControllerDelegate.h"
 
+static UITableViewRowAnimation defaultRowAnimation = UITableViewRowAnimationAutomatic;
+
 @interface FetchedResultsControllerDelegate ()
 
 @property (nonnull, nonatomic, strong) NSMutableArray *insertedSections;
@@ -18,6 +20,11 @@ https://developer.apple.com/library/ios/documentation/CoreData/Reference/NSFetch
 @end
 
 @implementation FetchedResultsControllerDelegate
+
++ (void)setDefaultRowAnimation:(UITableViewRowAnimation)rowAnimation
+{
+    defaultRowAnimation = rowAnimation;
+}
 
 - (instancetype)initWithTableView:(UITableView * _Nonnull)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation {
     self = [super init];
@@ -32,7 +39,7 @@ https://developer.apple.com/library/ios/documentation/CoreData/Reference/NSFetch
 }
 
 - (instancetype)initWithTableView:(UITableView *  _Nonnull)tableView {
-    return [self initWithTableView:tableView rowAnimation:UITableViewRowAnimationAutomatic];
+    return [self initWithTableView:tableView rowAnimation:defaultRowAnimation];
 }
 
 /*
