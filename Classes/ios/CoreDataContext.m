@@ -4,8 +4,6 @@
 #import <UIKit/UIKit.h>
 #import "CoreDataContext.h"
 
-static NSString * const kCurrentThreadManagedObjectContext = @"CoreDataContext::currentThreadManagedObjectContext";
-
 @interface CoreDataContext ()
 
 @property (nonnull, nonatomic, strong) NSString *databaseName;
