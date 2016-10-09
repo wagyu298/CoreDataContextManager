@@ -73,6 +73,7 @@ You does not need to do anything after [context save:] in background thread.
 ### Auto save when app enter to background
 
 CoreDataContext automatically save uncommited change operations when your App enter to background (UIApplicationDidEnterBackgroundNotification posted).
+This feature is default enabled.
 
 To disable this feature, initialize CoreDataContext with `CoreDataContextOptionsNone` and call `[context saveIfChanged:]` method instead.
 
