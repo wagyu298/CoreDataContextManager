@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CoreDataContext"
-  s.version      = "0.0.6"
+  s.version      = "0.0.7"
   s.summary      = "CoreData helpers for database auto-migration and multi threading ."
 
   s.description  = <<-DESC
