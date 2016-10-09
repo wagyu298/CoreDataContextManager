@@ -74,6 +74,25 @@ You does not need to do anything after [context save:] in background thread.
 
 CoreDataContext automatically save uncommited change operations when your App enter to background (UIApplicationDidEnterBackgroundNotification posted).
 
+To disable this feature, initialize CoreDataContext with `CoreDataContextOptionsNone` and call `[context saveIfChanged:]` method instead.
+
+```
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.coreDataContext = [[CoreDataContext alloc] initWithDatabaseName:@"MyDatabase" options:CoreDataContextOptionsNone];
+    return YES;
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    NSError *error = nil;
+    if (![self.coreDataContext saveIfChanged:&error]) {
+        NSLog(@"Core Data error: %@, %@", error, [error userInfo]);
+    }
+}
+@end
+```
+
 ### Example implementation of FetchedResultsControllerDelegate
 
 CoreDataContext includes example implementation of FetchedResultsControllerDelegate.

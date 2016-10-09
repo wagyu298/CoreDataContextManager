@@ -18,7 +18,7 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
-- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType {
+- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType options:(CoreDataContextOptions)options {
     self = [super init];
     if (self) {
         self.databaseName = databaseName;
@@ -52,34 +52,38 @@
         // Instanciate main thread object context
         [self managedObjectContext];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSaveNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        if (options & CoreDataContextOptionsAutoSave) {
+            [defaultCenter addObserver:self selector:@selector(didEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        }
+        [defaultCenter addObserver:self selector:@selector(didSaveNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
     }
     return self;
 }
 
 - (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType {
-    return [self initWithDatabaseName:databaseName directory:nil storeType:storeType];
+    return [self initWithDatabaseName:databaseName directory:nil storeType:storeType options:CoreDataContextOptionsDefault];
 }
 
+- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName options:(CoreDataContextOptions)options {
+    return [self initWithDatabaseName:databaseName directory:nil storeType:NSSQLiteStoreType options:options];
+}
+
+
 - (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName {
-    return [self initWithDatabaseName:databaseName storeType:NSSQLiteStoreType];
+    return [self initWithDatabaseName:databaseName directory:nil storeType:NSSQLiteStoreType options:CoreDataContextOptionsDefault];
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Notification Handlers
 
 - (void)didEnterBackgroundNotification:(NSNotification *)notification {
     NSError *error = nil;
-    if ([__managedObjectContext hasChanges] && ![__managedObjectContext save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+    if (![self saveIfChanged:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
     }
 }
 
@@ -208,6 +212,14 @@
     __persistentStoreCoordinator = nil;
     NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:[[NSNumber alloc] initWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [[NSNumber alloc] initWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
     [self persistentStoreCoordinatorWithOption:options];
+}
+
+- (BOOL)saveIfChanged:(NSError **)error {
+    if ([__managedObjectContext hasChanges]) {
+        return [__managedObjectContext save:error];
+    } else {
+        return YES;
+    }
 }
 
 @end
