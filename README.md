@@ -70,27 +70,20 @@ CoreDataContext object observe NSManagedObjectContextDidSaveNotification notifia
 `[context save:]` will trigger mergeChangesFromContextDidSaveNotification with main context.
 You does not need to do anything after [context save:] in background thread.
 
-### Auto save when app enter to background
+### Auto save when app resign active
 
-CoreDataContext automatically save uncommited change operations when your App enter to background (UIApplicationDidEnterBackgroundNotification posted).
-This feature is default enabled.
+CoreDataContext automatically save uncommited change operations when your App will resign active (UIApplicationWillResignActiveNotification posted).
 
-To disable this feature, initialize CoreDataContext with `CoreDataContextOptionsNone` and call `[context saveIfChanged:]` method instead.
+To enable this feature, initialize CoreDataContext with `CoreDataContextOptionsAutoSave`.
 
 ```
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.coreDataContext = [[CoreDataContext alloc] initWithDatabaseName:@"MyDatabase" options:CoreDataContextOptionsNone];
+    self.coreDataContext = [[CoreDataContext alloc] initWithDatabaseName:@"MyDatabase" options:CoreDataContextOptionsAutoSave];
     return YES;
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    NSError *error = nil;
-    if (![self.coreDataContext saveIfChanged:&error]) {
-        NSLog(@"Core Data error: %@, %@", error, [error userInfo]);
-    }
-}
 @end
 ```
 

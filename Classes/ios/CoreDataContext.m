@@ -54,7 +54,7 @@
         
         NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
         if (options & CoreDataContextOptionsAutoSave) {
-            [defaultCenter addObserver:self selector:@selector(didEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+            [defaultCenter addObserver:self selector:@selector(willResignActiveNotification:) name:UIApplicationWillResignActiveNotification object:nil];
         }
         [defaultCenter addObserver:self selector:@selector(didSaveNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
     }
@@ -80,7 +80,7 @@
 
 #pragma mark - Notification Handlers
 
-- (void)didEnterBackgroundNotification:(NSNotification *)notification {
+- (void)willResignActiveNotification:(NSNotification *)notification {
     NSError *error = nil;
     if (![self saveIfChanged:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);

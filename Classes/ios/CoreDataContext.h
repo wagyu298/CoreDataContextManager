@@ -9,7 +9,7 @@
 typedef NS_OPTIONS(NSUInteger, CoreDataContextOptions) {
     CoreDataContextOptionsNone = 0,
     CoreDataContextOptionsAutoSave = 0x1,
-    CoreDataContextOptionsDefault = 0x1,
+    CoreDataContextOptionsDefault = 0,
 };
 
 @interface CoreDataContext : NSObject
