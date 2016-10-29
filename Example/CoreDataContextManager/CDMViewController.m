@@ -62,7 +62,7 @@
     
     NSError *error = nil;
     if (![_fetchedResultsController performFetch:&error]) {
-        NSLog(@"%@", error);
+        NSLog(@"Fetch Error: %@", error);
     }
     
     return _fetchedResultsController;
@@ -114,7 +114,7 @@
             data.section = @"updated";
             NSError *error = nil;
             if (![[CDMAppDelegate appDelegate].coreDataContextManager.managedObjectContext save:&error]) {
-                NSLog(@"%@", error);
+                NSLog(@"Save Error: %@", error);
             }
         }
     }
