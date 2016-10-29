@@ -6,10 +6,13 @@ CoreData helpers for auto-migration and multi threading.
 
 ## Usage
 
-Modify your AppDelegate like this.
+Add CDMCoreDataContextManager to your AppDelegate class and initialize it in
+`[application:didFinishLaunchingWithOptions:]` method.
 If you already enabled CoreData with Xcode default templates, remove entire code before using CoreDataContextManager.
 
 ```
+@import CoreDataContextManager;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonnull, strong, nonatomic) UIWindow *window;

@@ -3,8 +3,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "NSManagedObjectContext+CoreDataContextManager.h"
-#import "CDMFetchedResultsControllerDelegate.h"
 
 typedef NS_OPTIONS(NSUInteger, CDMCoreDataContextManagerOptions) {
     CDMCoreDataContextManagerOptionsNone = 0,

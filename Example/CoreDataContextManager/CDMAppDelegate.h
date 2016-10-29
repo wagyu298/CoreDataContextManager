@@ -2,8 +2,7 @@
 // http://opensource.org/licenses/mit-license.php
 
 @import UIKit;
-
-#import "CDMCoreDataContextManager.h"
+@import CoreDataContextManager;
 
 @interface CDMAppDelegate : UIResponder <UIApplicationDelegate>
 

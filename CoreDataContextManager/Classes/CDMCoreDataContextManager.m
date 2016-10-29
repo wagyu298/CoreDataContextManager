@@ -3,6 +3,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CDMCoreDataContextManager.h"
+#import "NSManagedObjectContext+CoreDataContextManager.h"
 
 @interface CDMCoreDataContextManager ()
 

@@ -1,9 +1,10 @@
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 
-#import <Specta/Specta.h>
-#import <Expecta/Expecta.h>
-#import "CDMCoreDataContextManager.h"
+@import Specta;
+@import Expecta;
+@import CoreDataContextManager;
+
 #import "ExampleData+CoreDataClass.h"
 
 SpecBegin(CoreDataContextManagerSpecs)
