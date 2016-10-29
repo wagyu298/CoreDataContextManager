@@ -1,0 +1,13 @@
+use_frameworks!
+
+target 'CoreDataContextManager_Example' do
+  pod 'CoreDataContextManager', :path => '../'
+
+  target 'CoreDataContextManager_Tests' do
+    inherit! :search_paths
+
+    pod 'CoreDataContextManager', :path => '../'
+    pod 'Specta'
+    pod 'Expecta'
+  end
+end

@@ -87,6 +87,7 @@ To enable this feature, initialize CoreDataContextManager with `CoreDataContextM
 @end
 ```
 
-### Example implementation of FetchedResultsControllerDelegate
+### General implementation of FetchedResultsControllerDelegate
 
-CoreDataContextManager includes example implementation of FetchedResultsControllerDelegate (that named CDMFetchedResultsControllerDelegateDataSource).
+CoreDataContextManager includes general implementation of FetchedResultsControllerDelegate.
+See example application in repository for more details.
