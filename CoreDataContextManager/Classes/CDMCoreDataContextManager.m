@@ -195,9 +195,9 @@
 - (BOOL)shouldPerformCoreDataMigration {
     NSError *error = nil;
 #ifdef __IPHONE_9_0
-    NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType URL:self.persistentStoreURL options:nil error:&error];
+    NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:self.storeType URL:self.persistentStoreURL options:nil error:&error];
 #else
-    NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType URL:self.persistentStoreURL error:&error];
+    NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:self.storeType URL:self.persistentStoreURL error:&error];
 #endif
     
     if (storeMetadata == nil) {
