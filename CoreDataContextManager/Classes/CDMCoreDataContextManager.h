@@ -13,9 +13,6 @@ typedef NS_OPTIONS(NSUInteger, CDMCoreDataContextManagerOptions) {
 @interface CDMCoreDataContextManager : NSObject
 
 @property (nonnull, nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonnull, nonatomic, strong, readonly) NSURL *urlOfPersistentStore;
-@property (nonnull, nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonnull, nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 - (instancetype _Nonnull)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType options:(CDMCoreDataContextManagerOptions)options;
 - (instancetype _Nonnull)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType;
