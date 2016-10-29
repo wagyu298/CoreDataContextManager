@@ -2,6 +2,8 @@
 
 CoreData helpers for auto-migration and multi threading.
 
+[![Build Status](https://travis-ci.org/wagyu298/CoreDataContextManager.svg?branch=master)](https://travis-ci.org/wagyu298/CoreDataContextManager)
+
 ## Usage
 
 Modify your AppDelegate like this.
