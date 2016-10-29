@@ -1,5 +1,5 @@
 #
-#  Be sure to run `pod spec lint CoreDataContext.podspec' to ensure this is a
+#  Be sure to run `pod spec lint CoreDataContextManager.podspec' to ensure this is a
 #  valid spec and to remove all comments including this before submitting the spec.
 #
 #  To learn more about Podspec attributes see http://docs.cocoapods.org/specification.html
@@ -15,12 +15,12 @@ Pod::Spec.new do |s|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  s.name         = "CoreDataContext"
+  s.name         = "CoreDataContextManager"
   s.version      = "0.0.8"
   s.summary      = "CoreData helpers for database auto-migration and multi threading ."
 
   s.description  = <<-DESC
-                   A longer description of CoreDataContext in Markdown format.
+                   A longer description of CoreDataContextManager in Markdown format.
 
                    * Think: Why did you write this? What is the focus? What does it do?
                    * CocoaPods will be using this to generate tags, and improve search results.
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
                    * Finally, don't worry about the indent, CocoaPods strips it!
                    DESC
 
-  s.homepage     = "https://github.com/wagyu298/CoreDataContext"
+  s.homepage     = "https://github.com/wagyu298/CoreDataContextManager"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -79,7 +79,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/wagyu298/CoreDataContext.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/wagyu298/CoreDataContextManager.git", :tag => "0.0.1" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

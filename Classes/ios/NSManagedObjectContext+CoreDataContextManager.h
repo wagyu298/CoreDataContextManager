@@ -3,8 +3,8 @@
 
 #import <CoreData/CoreData.h>
 
-@interface NSManagedObjectContext (BackgroundThread)
+@interface NSManagedObjectContext (CoreDataContextManager)
 
-- (NSManagedObjectContext * _Nonnull)createChildManagedObjectContext;
+- (NSManagedObjectContext * _Nonnull)cdm_createChildManagedObjectContext;
 
 @end

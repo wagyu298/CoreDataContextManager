@@ -2,9 +2,9 @@
 // For more information, please refer to <http://unlicense.org/>
 
 #import <UIKit/UIKit.h>
-#import "CoreDataContext.h"
+#import "CDMCoreDataContextManager.h"
 
-@interface CoreDataContext ()
+@interface CDMCoreDataContextManager ()
 
 @property (nonnull, nonatomic, strong) NSString *databaseName;
 @property (nonnull, nonatomic, strong) NSString *storeType;
@@ -12,13 +12,13 @@
 
 @end
 
-@implementation CoreDataContext
+@implementation CDMCoreDataContextManager
 
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
-- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType options:(CoreDataContextOptions)options {
+- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType options:(CDMCoreDataContextManagerOptions)options {
     self = [super init];
     if (self) {
         self.databaseName = databaseName;
@@ -53,7 +53,7 @@
         [self managedObjectContext];
         
         NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-        if (options & CoreDataContextOptionsAutoSave) {
+        if (options & CDMCoreDataContextManagerOptionsAutoSave) {
             [defaultCenter addObserver:self selector:@selector(willResignActiveNotification:) name:UIApplicationWillResignActiveNotification object:nil];
         }
         [defaultCenter addObserver:self selector:@selector(didSaveNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
@@ -62,16 +62,16 @@
 }
 
 - (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType {
-    return [self initWithDatabaseName:databaseName directory:nil storeType:storeType options:CoreDataContextOptionsDefault];
+    return [self initWithDatabaseName:databaseName directory:nil storeType:storeType options:CDMCoreDataContextManagerOptionsDefault];
 }
 
-- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName options:(CoreDataContextOptions)options {
+- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName options:(CDMCoreDataContextManagerOptions)options {
     return [self initWithDatabaseName:databaseName directory:nil storeType:NSSQLiteStoreType options:options];
 }
 
 
 - (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName {
-    return [self initWithDatabaseName:databaseName directory:nil storeType:NSSQLiteStoreType options:CoreDataContextOptionsDefault];
+    return [self initWithDatabaseName:databaseName directory:nil storeType:NSSQLiteStoreType options:CDMCoreDataContextManagerOptionsDefault];
 }
 
 - (void)dealloc {
@@ -120,7 +120,7 @@
 }
 
 - (NSManagedObjectContext * _Nonnull)createBackgroundContext {
-    return [self.managedObjectContext createChildManagedObjectContext];
+    return [self.managedObjectContext cdm_createChildManagedObjectContext];
 }
 
 - (NSManagedObjectContext * _Nonnull)currentManagedObjectContext {
