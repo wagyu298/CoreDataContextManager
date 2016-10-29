@@ -18,7 +18,14 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+CoreDataContextManager is CoreData helper library.
+It provides the following features:
+
+- Auto-migration with xcdatamodel file versions
+- Multi threading with context management
+- Example implementation of NSFetchedResultsControllerDelegate
+
+See GitHub for usage and more details.
                        DESC
 
   s.homepage         = 'https://github.com/wagyu298/CoreDataContextManager'
