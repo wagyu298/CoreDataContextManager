@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CoreDataContextManager'
-  s.version          = '0.0.9'
+  s.version          = '0.0.10'
   s.summary          = 'CoreData helpers for database auto-migration and multi threading.'
 
 # This description is used to generate tags and improve search results.
