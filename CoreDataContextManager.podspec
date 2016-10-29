@@ -23,7 +23,7 @@ It provides the following features:
 
 - Auto-migration with xcdatamodel file versions
 - Multi threading with context management
-- Example implementation of NSFetchedResultsControllerDelegate
+- General implementation of NSFetchedResultsControllerDelegate
 
 See GitHub for usage and more details.
                        DESC
