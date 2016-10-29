@@ -210,7 +210,10 @@
 // Perform Core Data automatic lightweight migration.
 - (void)performMigration {
     __persistentStoreCoordinator = nil;
-    NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:[[NSNumber alloc] initWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [[NSNumber alloc] initWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+    NSDictionary *options = @{
+                              NSMigratePersistentStoresAutomaticallyOption: @YES,
+                              NSInferMappingModelAutomaticallyOption: @YES,
+                              };
     [self persistentStoreCoordinatorWithOption:options];
 }
 
