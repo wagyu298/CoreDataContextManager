@@ -7,19 +7,19 @@ I changed to fix some crashing situation.
 https://developer.apple.com/library/ios/documentation/CoreData/Reference/NSFetchedResultsControllerDelegate_Protocol/
 */
 
-#import "FetchedResultsControllerDelegate.h"
+#import "CDMFetchedResultsControllerDelegate.h"
 
 static UITableViewRowAnimation defaultRowAnimation = UITableViewRowAnimationAutomatic;
 static BOOL isIOS10;
 
-@interface FetchedResultsControllerDelegate ()
+@interface CDMFetchedResultsControllerDelegate ()
 
 @property (nonnull, nonatomic, strong) NSMutableArray *insertedSections;
 @property (nonnull, nonatomic, strong) NSMutableArray *deletedSections;
 
 @end
 
-@implementation FetchedResultsControllerDelegate
+@implementation CDMFetchedResultsControllerDelegate
 
 + (void)setDefaultRowAnimation:(UITableViewRowAnimation)rowAnimation
 {
@@ -77,7 +77,7 @@ with information from a managed object at the given index path in the fetched re
 - (BOOL)canUpdateWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
     NSObject <UITableViewDataSource> *dataSource = tableView.dataSource;
 
-    if (dataSource == nil || ![dataSource conformsToProtocol:@protocol(FetchedResultsControllerDelegateDataSource)]) {
+    if (dataSource == nil || ![dataSource conformsToProtocol:@protocol(CDMFetchedResultsControllerDelegateDataSource)]) {
         return NO;
 
     } else {
@@ -119,7 +119,7 @@ with information from a managed object at the given index path in the fetched re
             
         case NSFetchedResultsChangeUpdate:
             if ([self canUpdateWithTableView:tableView indexPath:indexPath]) {
-                NSObject <FetchedResultsControllerDelegateDataSource> *dataSource = (NSObject <FetchedResultsControllerDelegateDataSource> *)tableView.dataSource;
+                NSObject <CDMFetchedResultsControllerDelegateDataSource> *dataSource = (NSObject <CDMFetchedResultsControllerDelegateDataSource> *)tableView.dataSource;
                 UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
                 if (cell != nil) {
                     [dataSource configureCell:cell atIndexPath:indexPath];

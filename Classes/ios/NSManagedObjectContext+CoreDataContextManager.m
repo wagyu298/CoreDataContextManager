@@ -1,11 +1,11 @@
 // This is free and unencumbered software released into the public domain.
 // For more information, please refer to <http://unlicense.org/>
 
-#import "NSManagedObjectContext+BackgroundThread.h"
+#import "NSManagedObjectContext+CoreDataContextManager.h"
 
-@implementation NSManagedObjectContext (BackgroundThread)
+@implementation NSManagedObjectContext (CoreDataContextManager)
 
-- (NSManagedObjectContext * _Nonnull)createChildManagedObjectContext
+- (NSManagedObjectContext * _Nonnull)cdm_createChildManagedObjectContext
 {
     NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     NSManagedObjectContext *parentContext = self.parentContext;

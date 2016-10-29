@@ -1,35 +1,35 @@
-# CoreDataContext
+# CoreDataContextManager
 
 CoreData helpers for auto-migration and multi threading.
 
 ## Usage
 
 Modify your AppDelegate like this.
-If you already enabled CoreData with Xcode default templates, remove entire code before using CoreDataContext.
+If you already enabled CoreData with Xcode default templates, remove entire code before using CoreDataContextManager.
 
 ```
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonnull, strong, nonatomic) UIWindow *window;
-@property (nonnull, strong, nonatomic) CoreDataContext *coreDataContext;
+@property (nonnull, strong, nonatomic) CDMCoreDataContextManager *coreDataContextManager;
 @property (nonnull, strong, nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 
 @end
 ```
 
-You should pass a model file name prefix to the constructor method `[[CoreDataContext alloc] initWithDatabaseName:]`.
-If you create the model file that named `MyDatabase.xcdatamodeld`, call the method like `[context initWithDatabaseName:@"MyDatabase"]`.
+You should pass a model file name prefix to the constructor method `[[CDMCoreDataContextManager alloc] initWithDatabaseName:]`.
+If you create the model file that named `MyDatabase.xcdatamodeld`, call the method like `[[CDMCoreDataContextManager alloc] initWithDatabaseName:@"MyDatabase"]`.
 
 ```
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.coreDataContext = [[CoreDataContext alloc] initWithDatabaseName:@"MyDatabase"];
+    self.coreDataContextManager = [[CoreDataContextManager alloc] initWithDatabaseName:@"MyDatabase"];
     return YES;
 }
 
 - (NSManagedObjectContext * _Nonnull)managedObjectContext {
-    return self.coreDataContext.managedObjectContext;
+    return self.coreDataContextManager.managedObjectContext;
 }
 
 @end
@@ -46,41 +46,41 @@ NSManagedObjectContext *moc = appDelegate.managedObjectContext;
 
 ### Auto migration
 
-CoreDataContext automatically migration your xcdatamodeld file changes.
+CoreDataContextManager automatically migration your xcdatamodeld file changes.
 To migrate the database, add new model version to your App.
 You can add model version from Xcode menu `Editor -> Add Model Version...`.
 
 ### Multi threading
 
-You can create NSManagedObjectContext for none-UI thread by `[context createBackgroundContext]` method.
+You can create NSManagedObjectContext for none-UI thread by `[coreDataContextManager createBackgroundContext]` method.
 
 ```
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    NSManagedObjectContext *context = [coreDataContext createBackgroundContext];
+    NSManagedObjectContext *managedObjectContext = [self.coreDataContextManager createBackgroundContext];
     // CoreData operations...
 
     NSError *error = nil;
-    if (![context save:&error]) {
+    if (![managedObjectContext save:&error]) {
         NSLog(@"%@", error);
     }
 });
 ```
 
-CoreDataContext object observe NSManagedObjectContextDidSaveNotification notifiation.
-`[context save:]` will trigger mergeChangesFromContextDidSaveNotification with main context.
-You does not need to do anything after [context save:] in background thread.
+CoreDataContextManager object observe NSManagedObjectContextDidSaveNotification notifiation.
+`[managedObjectContext save:]` will trigger mergeChangesFromContextDidSaveNotification with main context.
+It means, you does not need to do anything after [managedObjectContext save:] in background thread.
 
 ### Auto save when app resign active
 
-CoreDataContext automatically save uncommited change operations when your App will resign active (UIApplicationWillResignActiveNotification posted).
+CoreDataContextManager automatically save uncommited change operations when your App will resign active (UIApplicationWillResignActiveNotification posted).
 
-To enable this feature, initialize CoreDataContext with `CoreDataContextOptionsAutoSave`.
+To enable this feature, initialize CoreDataContextManager with `CoreDataContextManagerOptionsAutoSave`.
 
 ```
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.coreDataContext = [[CoreDataContext alloc] initWithDatabaseName:@"MyDatabase" options:CoreDataContextOptionsAutoSave];
+    self.coreDataContextManager = [[CoreDataContextManager alloc] initWithDatabaseName:@"MyDatabase" options:CoreDataContextManagerOptionsAutoSave];
     return YES;
 }
 
@@ -89,4 +89,4 @@ To enable this feature, initialize CoreDataContext with `CoreDataContextOptionsA
 
 ### Example implementation of FetchedResultsControllerDelegate
 
-CoreDataContext includes example implementation of FetchedResultsControllerDelegate.
+CoreDataContextManager includes example implementation of FetchedResultsControllerDelegate (that named CDMFetchedResultsControllerDelegateDataSource).

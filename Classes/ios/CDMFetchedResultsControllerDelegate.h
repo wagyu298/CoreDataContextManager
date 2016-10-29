@@ -4,14 +4,14 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@protocol FetchedResultsControllerDelegateDataSource <UITableViewDataSource>
+@protocol CDMFetchedResultsControllerDelegateDataSource <UITableViewDataSource>
 
 @required
 - (void)configureCell:(UITableViewCell * _Nonnull)cell atIndexPath:(NSIndexPath * _Nullable)indexPath;
 
 @end
 
-@interface FetchedResultsControllerDelegate : NSObject <NSFetchedResultsControllerDelegate>
+@interface CDMFetchedResultsControllerDelegate : NSObject <NSFetchedResultsControllerDelegate>
 
 + (void)setDefaultRowAnimation:(UITableViewRowAnimation)rowAnimation;
 
