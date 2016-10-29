@@ -6,7 +6,8 @@ target 'CoreDataContextManager_Example' do
   target 'CoreDataContextManager_Tests' do
     inherit! :search_paths
 
+    pod 'CoreDataContextManager', :path => '../'
     pod 'Specta'
-  pod 'Expecta'
+    pod 'Expecta'
   end
 end
