@@ -16,7 +16,7 @@
     
     self = [super init];
     if (self) {
-        [self setupManagedObjectCotextWithStoreType:configuration.storeType mappingModelURL:configuration.mappingModelURL persistentStoreURL:configuration.persistentStoreURL];
+        [self setupWithConfiguration:configuration];
         
         NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
         if (configuration.autoSave) {
@@ -116,33 +116,31 @@
 
 #pragma mark - CoreData stack
 
-- (void)setupManagedObjectCotextWithStoreType:(NSString * _Nonnull)storeType mappingModelURL:(NSURL * _Nonnull)mappingModelURL persistentStoreURL:(NSURL * _Nullable)persistentStoreURL {
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:mappingModelURL];
+- (void)setupWithConfiguration:(CDMCoreDataContextManagerConfiguration * _Nonnull)configuration {
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:configuration.mappingModelURL];
     
-    NSDictionary *options = nil;
-    if (persistentStoreURL != nil) {
+    NSMutableDictionary *options = [configuration.storeOptions mutableCopy];
+    if (configuration.persistentStoreURL != nil) {
         NSError *error = nil;
 #ifdef __IPHONE_9_0
-        NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:storeType URL:persistentStoreURL options:nil error:&error];
+        NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:configuration.storeType URL:configuration.persistentStoreURL options:nil error:&error];
 #else
-        NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:storeType URL:persistentStoreURL error:&error];
+        NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:configuration.storeType URL:configuration.persistentStoreURL error:&error];
 #endif
         
         if (storeMetadata != nil) {
             BOOL isCompatibile = [_managedObjectModel isConfiguration:nil compatibleWithStoreMetadata:storeMetadata];
             if (!isCompatibile) {
                 // Required migration
-                options = @{
-                            NSMigratePersistentStoresAutomaticallyOption: @YES,
-                            NSInferMappingModelAutomaticallyOption: @YES,
-                            };
+                options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
+                options[NSInferMappingModelAutomaticallyOption] = @YES;
             }
         }
     }
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:storeType configuration:nil URL:persistentStoreURL options:options error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:configuration.storeType configuration:nil URL:configuration.persistentStoreURL options:options error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }

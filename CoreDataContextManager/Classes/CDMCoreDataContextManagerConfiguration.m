@@ -77,6 +77,7 @@
     self = [super init];
     if (self) {
         self.autoSave = YES;
+        self.storeOptions = @{};
     }
     return self;
 }
@@ -86,6 +87,7 @@
     if (self) {
         self.storeType = storeType;
         self.autoSave = YES;
+        self.storeOptions = @{};
     }
     return self;
 }
@@ -97,6 +99,7 @@
         self.autoSave = YES;
         [self setMappingModelURLWithDatabaseName:databaseName];
         [self setPersistentStoreURLWithStoreType:storeType databaseName:databaseName];
+        self.storeOptions = @{};
     }
     return self;
 }

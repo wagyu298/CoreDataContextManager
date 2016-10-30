@@ -10,6 +10,7 @@
 @property (nonatomic, strong, nonnull) NSURL *mappingModelURL;
 @property (nonatomic, strong, nonnull) NSURL *persistentStoreURL;
 @property (nonatomic) BOOL autoSave;
+@property (nonatomic, strong, nonnull) NSDictionary *storeOptions;
 
 - (instancetype _Nonnull)initWithStoreType:(NSString * _Nonnull)storeType;
 - (instancetype _Nonnull)initWithStoreType:(NSString * _Nonnull)storeType databaseName:(NSString * _Nonnull)databaseName;

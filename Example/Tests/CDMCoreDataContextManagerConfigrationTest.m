@@ -24,6 +24,7 @@ describe(@"CDMCoreDataContextManagerConfiguration", ^{
             expect(config.autoSave).to.beTruthy();
             expect(config.mappingModelURL).to.beNil();
             expect(config.persistentStoreURL).to.beNil();
+            expect(config.storeOptions).to.equal(@{});
         });
         
         it(@"initWithStoreType:", ^{
@@ -33,6 +34,7 @@ describe(@"CDMCoreDataContextManagerConfiguration", ^{
             expect(config.autoSave).to.beTruthy();
             expect(config.mappingModelURL).to.beNil();
             expect(config.persistentStoreURL).to.beNil();
+            expect(config.storeOptions).to.equal(@{});
         });
         
         it(@"initWithStoreType:databaseName: (NSSQLiteStoreType)", ^{
@@ -40,6 +42,7 @@ describe(@"CDMCoreDataContextManagerConfiguration", ^{
             expect(config).toNot.beNil();
             expect(config.storeType).to.equal(NSSQLiteStoreType);
             expect(config.autoSave).to.beTruthy();
+            expect(config.storeOptions).to.equal(@{});
             
             NSURL *modelUrl = [[NSBundle mainBundle] URLForResource:databaseName withExtension:@"momd"];
             expect(config.mappingModelURL).to.equal(modelUrl)
