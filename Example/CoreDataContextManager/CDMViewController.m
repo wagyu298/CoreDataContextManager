@@ -26,6 +26,11 @@
     CDMAppDelegate *appDelegate = [CDMAppDelegate appDelegate];
     self.managedObjectContext = appDelegate.coreDataContextManager.managedObjectContext;
     
+    NSError *error = nil;
+    if (![self.managedObjectContext cdm_deleteWithEntityName:@"ExampleData" error:&error]) {
+        NSLog(@"delete error: %@", error);
+    }
+    
     self.number = 0;
     for (int i = 0; i < 20; ++i) {
         [ExampleData createWithTitle:@"created" section:@"created" number:++self.number];
