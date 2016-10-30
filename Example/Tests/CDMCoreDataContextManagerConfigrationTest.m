@@ -10,7 +10,7 @@
 #import <Expecta/Expecta.h>
 #import <CoreDataContextManager/CoreDataContextManager.h>
 
-SpecBegin(CoreDataContextManagerConfigurationSpecs)
+SpecBegin(CDMCoreDataContextManagerConfigurationSpecs)
 
 describe(@"CDMCoreDataContextManagerConfiguration", ^{
     NSString *databaseName = @"test";

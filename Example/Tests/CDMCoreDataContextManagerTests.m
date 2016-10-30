@@ -7,9 +7,9 @@
 
 #import "ExampleData+CoreDataClass.h"
 
-SpecBegin(CoreDataContextManagerSpecs)
+SpecBegin(CDMCoreDataContextManagerSpecs)
 
-describe(@"CoreDataContextManager", ^{
+describe(@"CDMCoreDataContextManager", ^{
     __block CDMCoreDataContextManager *manager;
     
     beforeEach(^{
