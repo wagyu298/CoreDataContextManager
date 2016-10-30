@@ -39,6 +39,6 @@ typedef NS_OPTIONS(NSUInteger, CDMCoreDataContextManagerOptions) {
 - (NSManagedObjectContext * _Nonnull)createBackgroundContext;
 - (NSManagedObjectContext * _Nonnull)currentManagedObjectContext;
 
-- (BOOL)saveIfChanged:(NSError * _Nullable * _Nullable)error;
+- (BOOL)saveIfChanged:(NSError * _Nullable * _Nullable)error DEPRECATED_ATTRIBUTE;
 
 @end

@@ -96,7 +96,7 @@
 
 - (void)willResignActiveNotification:(NSNotification *)notification {
     NSError *error = nil;
-    if (![self saveIfChanged:&error]) {
+    if (![self.managedObjectContext cdm_saveChanges:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
 }
@@ -162,11 +162,7 @@
 }
 
 - (BOOL)saveIfChanged:(NSError **)error {
-    if ([self.managedObjectContext hasChanges]) {
-        return [self.managedObjectContext save:error];
-    } else {
-        return YES;
-    }
+    return [self.managedObjectContext cdm_saveChanges:error];
 }
 
 @end

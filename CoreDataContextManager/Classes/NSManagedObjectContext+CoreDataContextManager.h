@@ -6,5 +6,6 @@
 @interface NSManagedObjectContext (CoreDataContextManager)
 
 - (NSManagedObjectContext * _Nonnull)cdm_createChildManagedObjectContext;
+- (BOOL)cdm_saveChanges:(NSError * _Nullable * _Nullable)error;
 
 @end
