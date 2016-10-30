@@ -19,7 +19,7 @@
 // Save if required
 - (BOOL)cdm_saveChanges:(NSError * _Nullable * _Nullable)error {
     if ([self hasChanges]) {
-        [self save:error];
+        return [self save:error];
     } else {
         return YES;
     }
