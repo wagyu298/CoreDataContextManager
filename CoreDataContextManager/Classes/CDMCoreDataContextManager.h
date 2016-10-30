@@ -15,8 +15,8 @@ typedef NS_OPTIONS(NSUInteger, CDMCoreDataContextManagerOptions) {
 
 @property (nonnull, nonatomic, strong, readonly) CDMCoreDataContextManagerConfiguration*configuration;
 @property (nonnull, nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonnull, nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonnull, nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonnull, nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
 
 - (instancetype _Nonnull)initWithConfiguration:(CDMCoreDataContextManagerConfiguration * _Nonnull)configuration;
 

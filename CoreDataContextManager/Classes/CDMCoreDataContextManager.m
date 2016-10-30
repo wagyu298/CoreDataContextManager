@@ -11,6 +11,9 @@
 
 @implementation CDMCoreDataContextManager
 
+@dynamic persistentStoreCoordinator;
+@dynamic managedObjectModel;
+
 - (instancetype _Nonnull)initWithConfiguration:(CDMCoreDataContextManagerConfiguration * _Nonnull)configuration {
     assert([NSThread isMainThread]);
     
@@ -118,7 +121,7 @@
 
 - (void)setupWithConfiguration:(CDMCoreDataContextManagerConfiguration * _Nonnull)configuration {
     _configuration = configuration;
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:configuration.mappingModelURL];
+    NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:configuration.mappingModelURL];
     
     NSMutableDictionary *options = [configuration.storeOptions mutableCopy];
     if (configuration.persistentStoreURL != nil) {
@@ -130,7 +133,7 @@
 #endif
         
         if (storeMetadata != nil) {
-            BOOL isCompatibile = [_managedObjectModel isConfiguration:nil compatibleWithStoreMetadata:storeMetadata];
+            BOOL isCompatibile = [managedObjectModel isConfiguration:nil compatibleWithStoreMetadata:storeMetadata];
             if (!isCompatibile) {
                 // Required migration
                 options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
@@ -140,14 +143,15 @@
     }
     
     NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:configuration.storeType configuration:nil URL:configuration.persistentStoreURL options:options error:&error]) {
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
+    if (![persistentStoreCoordinator addPersistentStoreWithType:configuration.storeType configuration:nil URL:configuration.persistentStoreURL options:options error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
-    _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    [_managedObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
+    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    [managedObjectContext setPersistentStoreCoordinator:persistentStoreCoordinator];
+    _managedObjectContext = managedObjectContext;
 }
 
 - (NSManagedObjectContext * _Nonnull)createBackgroundContext {
@@ -164,6 +168,16 @@
 
 - (BOOL)saveIfChanged:(NSError **)error {
     return [self.managedObjectContext cdm_saveChanges:error];
+}
+
+#pragma mark - Properties
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
+    return self.managedObjectContext.persistentStoreCoordinator;
+}
+
+- (NSManagedObjectModel *)managedObjectModel {
+    return self.managedObjectContext.persistentStoreCoordinator.managedObjectModel;
 }
 
 @end
