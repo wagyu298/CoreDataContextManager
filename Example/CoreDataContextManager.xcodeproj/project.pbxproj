@@ -30,6 +30,8 @@
 		A35688B11DC497B200B30AF3 /* ExampleData+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A35688AF1DC497B200B30AF3 /* ExampleData+CoreDataProperties.m */; };
 		A35688B31DC49A7E00B30AF3 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A35688B21DC49A7E00B30AF3 /* Launch Screen.storyboard */; };
 		A36DB9281DC5A343005EDFA0 /* CDMCoreDataContextManagerConfigrationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A36DB9271DC5A343005EDFA0 /* CDMCoreDataContextManagerConfigrationTest.m */; };
+		A3A44D531DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3A44D511DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld */; };
+		A3A44D551DC5CE4100884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3A44D511DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld */; };
 		DE93985D0815A59397D965B5 /* Pods_CoreDataContextManager_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6DC7A3030B7776DA7F2E2FF /* Pods_CoreDataContextManager_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +78,8 @@
 		A35688AF1DC497B200B30AF3 /* ExampleData+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ExampleData+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A35688B21DC49A7E00B30AF3 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A36DB9271DC5A343005EDFA0 /* CDMCoreDataContextManagerConfigrationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDMCoreDataContextManagerConfigrationTest.m; sourceTree = "<group>"; };
+		A3A44D521DC5C93400884F85 /* CoreDataContextManagerExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataContextManagerExample.xcdatamodel; sourceTree = "<group>"; };
+		A3A44D541DC5C94300884F85 /* CoreDataContextManagerExample 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CoreDataContextManagerExample 2.xcdatamodel"; sourceTree = "<group>"; };
 		B6DC7A3030B7776DA7F2E2FF /* Pods_CoreDataContextManager_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreDataContextManager_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0C66569B878F4E7958898A4 /* Pods-CoreDataContextManager_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataContextManager_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataContextManager_Tests/Pods-CoreDataContextManager_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D49110A554D03C9FBFFD47BB /* Pods-CoreDataContextManager_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataContextManager_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataContextManager_Tests/Pods-CoreDataContextManager_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -215,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				A35688A91DC4977500B30AF3 /* CoreDataContextManagerExample.xcdatamodeld */,
+				A3A44D511DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld */,
 				A35688AC1DC497B200B30AF3 /* ExampleData+CoreDataClass.h */,
 				A35688AD1DC497B200B30AF3 /* ExampleData+CoreDataClass.m */,
 				A35688AE1DC497B200B30AF3 /* ExampleData+CoreDataProperties.h */,
@@ -422,6 +427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A35688B11DC497B200B30AF3 /* ExampleData+CoreDataProperties.m in Sources */,
+				A3A44D551DC5CE4100884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld in Sources */,
 				6003F59E195388D20070C39A /* CDMAppDelegate.m in Sources */,
 				A35688AB1DC4977500B30AF3 /* CoreDataContextManagerExample.xcdatamodeld in Sources */,
 				6003F5A7195388D20070C39A /* CDMViewController.m in Sources */,
@@ -434,6 +440,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3A44D531DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld in Sources */,
 				A332FA401DC4A98F00463C2D /* ExampleData+CoreDataProperties.m in Sources */,
 				6003F5BC195388D20070C39A /* CDMCoreDataContextManagerTests.m in Sources */,
 				A332FA3F1DC4A98C00463C2D /* ExampleData+CoreDataClass.m in Sources */,
@@ -667,10 +674,21 @@
 		A35688A91DC4977500B30AF3 /* CoreDataContextManagerExample.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A3A44D541DC5C94300884F85 /* CoreDataContextManagerExample 2.xcdatamodel */,
 				A35688AA1DC4977500B30AF3 /* CoreDataContextManagerExample.xcdatamodel */,
 			);
-			currentVersion = A35688AA1DC4977500B30AF3 /* CoreDataContextManagerExample.xcdatamodel */;
+			currentVersion = A3A44D541DC5C94300884F85 /* CoreDataContextManagerExample 2.xcdatamodel */;
 			path = CoreDataContextManagerExample.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		A3A44D511DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A3A44D521DC5C93400884F85 /* CoreDataContextManagerExample.xcdatamodel */,
+			);
+			currentVersion = A3A44D521DC5C93400884F85 /* CoreDataContextManagerExample.xcdatamodel */;
+			path = CoreDataContextManagerExample_v1.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -82,4 +82,65 @@ describe(@"CDMCoreDataContextManager", ^{
     
 });
 
+describe(@"Light weight migration", ^{
+    beforeAll(^{
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSArray *files = @[
+                               @"CoreDataContextManagerExample.sqlite",
+                               @"CoreDataContextManagerExample.sqlite-shm",
+                               @"CoreDataContextManagerExample.sqlite-wal",
+                               ];
+        for (NSString *file in files) {
+            NSString *filePath = [documentsPath stringByAppendingPathComponent:file];
+            NSError *error = nil;
+            BOOL rv = [fileManager removeItemAtPath:filePath error:&error];
+            expect(rv).to.beTruthy();
+            expect(error).to.beNil();
+        }
+    });
+    
+    it(@"Migrate", ^{
+        waitUntil(^(DoneCallback done) {
+            CDMCoreDataContextManagerConfiguration *config = [[CDMCoreDataContextManagerSQLLiteConfiguration alloc] initWithDatabaseName:@"CoreDataContextManagerExample"];
+            [config setMappingModelURLWithDatabaseName:@"CoreDataContextManagerExample_v1"];
+            
+            CDMCoreDataContextManager *manager = [[CDMCoreDataContextManager alloc] initWithConfiguration:config];
+            expect(manager).to.beTruthy();
+            
+            NSManagedObjectContext *context = manager.managedObjectContext;
+            NSManagedObject *data = [NSEntityDescription insertNewObjectForEntityForName:@"ExampleData" inManagedObjectContext:context];
+            [data setValue:@"title" forKey:@"title"];
+            [data setValue:@"section" forKey:@"section"];
+            [data setValue:@1 forKey:@"number"];
+            
+            NSError *error = nil;
+            BOOL rv = [context save:&error];
+            expect(rv).to.beTruthy();
+            expect(error).to.beNil();
+            
+            done();
+        });
+        
+        CDMCoreDataContextManagerConfiguration *config = [[CDMCoreDataContextManagerSQLLiteConfiguration alloc] initWithDatabaseName:@"CoreDataContextManagerExample"];
+        
+        CDMCoreDataContextManager *manager = [[CDMCoreDataContextManager alloc] initWithConfiguration:config];
+        expect(manager).to.beTruthy();
+        
+        NSManagedObjectContext *context = manager.managedObjectContext;
+        
+        NSError *error = nil;
+        NSFetchRequest *req = [[NSFetchRequest alloc] initWithEntityName:@"ExampleData"];
+        NSArray *results = [context executeFetchRequest:req error:&error];
+        expect(results).to.beTruthy();
+        expect(error).to.beNil();
+        expect([results count]).to.equal(1);
+        
+        ExampleData *data = results[0];
+        expect(data.title).to.equal(@"title");
+        expect(data.updatedAt).to.beNil();
+    });
+
+});
+
 SpecEnd
