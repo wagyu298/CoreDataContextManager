@@ -117,6 +117,7 @@
 #pragma mark - CoreData stack
 
 - (void)setupWithConfiguration:(CDMCoreDataContextManagerConfiguration * _Nonnull)configuration {
+    _configuration = configuration;
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:configuration.mappingModelURL];
     
     NSMutableDictionary *options = [configuration.storeOptions mutableCopy];
