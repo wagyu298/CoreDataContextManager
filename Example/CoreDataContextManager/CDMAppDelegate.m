@@ -8,7 +8,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    self.coreDataContextManager = [[CDMCoreDataContextManager alloc] initWithDatabaseName:@"CoreDataContextManagerExample" directory:nil storeType:NSInMemoryStoreType options:CDMCoreDataContextManagerOptionsAutoSave];
+    self.coreDataContextManager = [[CDMCoreDataContextManager alloc] initWithInMemoryDatabaseName:@"CoreDataContextManagerExample"];
     return YES;
 }
 

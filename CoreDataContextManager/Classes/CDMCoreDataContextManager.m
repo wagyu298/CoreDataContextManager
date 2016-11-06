@@ -11,38 +11,15 @@
 
 @implementation CDMCoreDataContextManager
 
-- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType options:(CDMCoreDataContextManagerOptions)options {
+- (instancetype _Nonnull)initWithConfiguration:(CDMCoreDataContextManagerConfiguration * _Nonnull)configuration {
     assert([NSThread isMainThread]);
     
     self = [super init];
     if (self) {
-        NSURL *modelURL = [[NSBundle mainBundle] URLForResource:databaseName withExtension:@"momd"];
-        NSURL *persistentStoreURL = nil;
-        
-        if (![storeType isEqualToString:NSInMemoryStoreType]) {
-            NSString *filename;
-            if ([storeType isEqualToString:NSSQLiteStoreType]) {
-                filename = [NSString stringWithFormat:@"%@.sqlite", databaseName];
-            } else if ([storeType isEqualToString:NSBinaryStoreType]) {
-                filename = [NSString stringWithFormat:@"%@.binary", databaseName];
-            } else {
-                filename = databaseName;    // Unknown store type
-            }
-            
-            NSURL *directoryURL;
-            if (directory == nil) {
-                directoryURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-            } else {
-                directoryURL = directory;
-            }
-            
-            persistentStoreURL = [directoryURL URLByAppendingPathComponent:filename];
-        }
-        
-        [self setupManagedObjectCotextWithStoreType:storeType modelURL:modelURL persistentStoreURL:persistentStoreURL];
+        [self setupManagedObjectCotextWithStoreType:configuration.storeType mappingModelURL:configuration.mappingModelURL persistentStoreURL:configuration.persistentStoreURL];
         
         NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-        if (options & CDMCoreDataContextManagerOptionsAutoSave) {
+        if (configuration.autoSave) {
             [defaultCenter addObserver:self selector:@selector(willResignActiveNotification:) name:UIApplicationWillResignActiveNotification object:nil];
         }
         [defaultCenter addObserver:self selector:@selector(didSaveNotification:) name:NSManagedObjectContextDidSaveNotification object:nil];
@@ -50,15 +27,64 @@
     return self;
 }
 
-- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType {
+- (instancetype _Nonnull)initWithStoreType:(NSString * _Nonnull)storeType databaseName:(NSString * _Nonnull)databaseName autoSave:(BOOL)autoSave {
+    CDMCoreDataContextManagerConfiguration *config = [[CDMCoreDataContextManagerConfiguration alloc] initWithStoreType:storeType databaseName:databaseName];
+    config.autoSave = autoSave;
+    return [self initWithConfiguration:config];
+}
+
+- (instancetype _Nonnull)initWithStoreType:(NSString * _Nonnull)storeType databaseName:(NSString * _Nonnull)databaseName
+{
+    return [self initWithStoreType:storeType databaseName:databaseName autoSave:YES];
+}
+
+- (instancetype _Nonnull)initWithSQLiteDatabaseName:(NSString * _Nonnull)databaseName autoSave:(BOOL)autoSave {
+    CDMCoreDataContextManagerConfiguration *config = [[CDMCoreDataContextManagerSQLLiteConfiguration alloc] initWithDatabaseName:databaseName];
+    config.autoSave = autoSave;
+    return [self initWithConfiguration:config];
+}
+
+- (instancetype _Nonnull)initWithSQLiteDatabaseName:(NSString * _Nonnull)databaseName {
+    return [self initWithSQLiteDatabaseName:databaseName autoSave:YES];
+}
+
+- (instancetype _Nonnull)initWithBinaryDatabaseName:(NSString * _Nonnull)databaseName autoSave:(BOOL)autoSave {
+    CDMCoreDataContextManagerConfiguration *config = [[CDMCoreDataContextManagerBinaryConfiguration alloc] initWithDatabaseName:databaseName];
+    config.autoSave = autoSave;
+    return [self initWithConfiguration:config];
+}
+
+- (instancetype _Nonnull)initWithBinaryDatabaseName:(NSString * _Nonnull)databaseName {
+    return [self initWithBinaryDatabaseName:databaseName autoSave:YES];
+}
+
+- (instancetype _Nonnull)initWithInMemoryDatabaseName:(NSString * _Nonnull)databaseName autoSave:(BOOL)autoSave {
+    CDMCoreDataContextManagerConfiguration *config = [[CDMCoreDataContextManagerInMemoryConfiguration alloc] initWithDatabaseName:databaseName];
+    config.autoSave = autoSave;
+    return [self initWithConfiguration:config];
+}
+
+- (instancetype _Nonnull)initWithInMemoryDatabaseName:(NSString * _Nonnull)databaseName {
+    return [self initWithInMemoryDatabaseName:databaseName autoSave:YES];
+}
+
+- (instancetype _Nonnull)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType options:(CDMCoreDataContextManagerOptions)options DEPRECATED_ATTRIBUTE {
+    CDMCoreDataContextManagerConfiguration *config = [[CDMCoreDataContextManagerConfiguration alloc] initWithStoreType:storeType];
+    config.autoSave = (options & CDMCoreDataContextManagerOptionsAutoSave);
+    [config setMappingModelURLWithDatabaseName:databaseName];
+    [config setPersistentStoreURLWithStoreType:storeType directoryURL:directory databaseName:databaseName];
+    return [self initWithConfiguration:config];
+}
+
+- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType DEPRECATED_ATTRIBUTE {
     return [self initWithDatabaseName:databaseName directory:nil storeType:storeType options:CDMCoreDataContextManagerOptionsDefault];
 }
 
-- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName options:(CDMCoreDataContextManagerOptions)options {
+- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName options:(CDMCoreDataContextManagerOptions)options DEPRECATED_ATTRIBUTE {
     return [self initWithDatabaseName:databaseName directory:nil storeType:NSSQLiteStoreType options:options];
 }
 
-- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName {
+- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName DEPRECATED_ATTRIBUTE {
     return [self initWithDatabaseName:databaseName directory:nil storeType:NSSQLiteStoreType options:CDMCoreDataContextManagerOptionsDefault];
 }
 
@@ -82,7 +108,7 @@
             NSError *error = nil;
             [_managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
             if (![_managedObjectContext save:&error]) {
-                NSLog(@"%@", error);
+                NSLog(@"Unresolved error %@", error);
             }
         }];
     }
@@ -90,8 +116,8 @@
 
 #pragma mark - CoreData stack
 
-- (void)setupManagedObjectCotextWithStoreType:(NSString * _Nonnull)storeType modelURL:(NSURL * _Nonnull)modelURL persistentStoreURL:(NSURL * _Nullable)persistentStoreURL {
-    NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+- (void)setupManagedObjectCotextWithStoreType:(NSString * _Nonnull)storeType mappingModelURL:(NSURL * _Nonnull)mappingModelURL persistentStoreURL:(NSURL * _Nullable)persistentStoreURL {
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:mappingModelURL];
     
     NSDictionary *options = nil;
     if (persistentStoreURL != nil) {
@@ -103,7 +129,7 @@
 #endif
         
         if (storeMetadata != nil) {
-            BOOL isCompatibile = [managedObjectModel isConfiguration:nil compatibleWithStoreMetadata:storeMetadata];
+            BOOL isCompatibile = [_managedObjectModel isConfiguration:nil compatibleWithStoreMetadata:storeMetadata];
             if (!isCompatibile) {
                 // Required migration
                 options = @{
@@ -115,14 +141,14 @@
     }
     
     NSError *error = nil;
-    NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
-    if (![persistentStoreCoordinator addPersistentStoreWithType:storeType configuration:nil URL:persistentStoreURL options:options error:&error]) {
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:storeType configuration:nil URL:persistentStoreURL options:options error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    [_managedObjectContext setPersistentStoreCoordinator:persistentStoreCoordinator];
+    [_managedObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
 }
 
 - (NSManagedObjectContext * _Nonnull)createBackgroundContext {

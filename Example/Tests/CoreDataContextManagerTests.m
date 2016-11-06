@@ -13,7 +13,7 @@ describe(@"CoreDataContextManager", ^{
     __block CDMCoreDataContextManager *manager;
     
     beforeEach(^{
-        manager = [[CDMCoreDataContextManager alloc] initWithDatabaseName:@"CoreDataContextManagerExample" directory:nil storeType:NSInMemoryStoreType options:CDMCoreDataContextManagerOptionsAutoSave];
+        manager = [[CDMCoreDataContextManager alloc] initWithInMemoryDatabaseName:@"CoreDataContextManagerExample"];
     });
     
     it(@"create context manager", ^{

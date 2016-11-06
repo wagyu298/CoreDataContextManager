@@ -2,5 +2,6 @@
 // For more information, please refer to <http://unlicense.org/>
 
 #import "CDMCoreDataContextManager.h"
+#import "CDMCoreDataContextManagerConfiguration.h"
 #import "CDMFetchedResultsControllerDelegate.h"
 #import "NSManagedObjectContext+CoreDataContextManager.h"
