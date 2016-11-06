@@ -1,12 +1,5 @@
-//
-//  CoreDataContextManagerTests.m
-//  CoreDataContextManagerTests
-//
-//  Created by wagyu298 on 10/29/2016.
-//  Copyright (c) 2016 wagyu298. All rights reserved.
-//
-
-// https://github.com/Specta/Specta
+// This software is released under the MIT License.
+// http://opensource.org/licenses/mit-license.php
 
 #import <Specta/Specta.h>
 #import <Expecta/Expecta.h>

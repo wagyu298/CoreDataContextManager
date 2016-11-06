@@ -30,7 +30,7 @@ See GitHub for usage and more details.
 
   s.homepage         = 'https://github.com/wagyu298/CoreDataContextManager'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'Unlicense', :file => 'LICENSE' }
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'wagyu298' => 'wagyu298@gmail.com' }
   s.source           = { :git => 'https://github.com/wagyu298/CoreDataContextManager.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/wagyu298'

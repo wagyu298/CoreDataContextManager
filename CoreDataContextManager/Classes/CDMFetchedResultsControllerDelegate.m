@@ -1,5 +1,5 @@
-// This is free and unencumbered software released into the public domain.
-// For more information, please refer to <http://unlicense.org/>
+// This software is released under the MIT License.
+// http://opensource.org/licenses/mit-license.php
 
 /*
 This file based upon Apple's NSFetchedResultsControllerDelegate example and
