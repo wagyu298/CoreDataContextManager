@@ -1,8 +1,6 @@
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 
-#import <Specta/Specta.h>
-#import <Expecta/Expecta.h>
 #import <CoreDataContextManager/CoreDataContextManager.h>
 
 #import "ExampleData+CoreDataClass.h"

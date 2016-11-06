@@ -6,8 +6,6 @@
 //  Copyright © 2016年 wagyu298. All rights reserved.
 //
 
-#import <Specta/Specta.h>
-#import <Expecta/Expecta.h>
 #import <CoreDataContextManager/CoreDataContextManager.h>
 
 SpecBegin(CDMCoreDataContextManagerConfigurationSpecs)
