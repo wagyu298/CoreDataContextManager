@@ -127,7 +127,7 @@
     if (configuration.persistentStoreURL != nil) {
         NSError *error = nil;
 #ifdef __IPHONE_9_0
-        NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:configuration.storeType URL:configuration.persistentStoreURL options:nil error:&error];
+        NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:configuration.storeType URL:configuration.persistentStoreURL options:options error:&error];
 #else
         NSDictionary *storeMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:configuration.storeType URL:configuration.persistentStoreURL error:&error];
 #endif
