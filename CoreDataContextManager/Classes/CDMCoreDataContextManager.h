@@ -3,7 +3,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import <CoreDataContextManager/CoreDataContextManager.h>
+#import <CoreDataContextManager/CDMCoreDataContextManagerConfiguration.h>
 
 typedef NS_OPTIONS(NSUInteger, CDMCoreDataContextManagerOptions) {
     CDMCoreDataContextManagerOptionsNone = 0,
