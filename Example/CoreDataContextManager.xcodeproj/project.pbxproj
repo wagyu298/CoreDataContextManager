@@ -29,6 +29,8 @@
 		A35688B01DC497B200B30AF3 /* ExampleData+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A35688AD1DC497B200B30AF3 /* ExampleData+CoreDataClass.m */; };
 		A35688B11DC497B200B30AF3 /* ExampleData+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A35688AF1DC497B200B30AF3 /* ExampleData+CoreDataProperties.m */; };
 		A35688B31DC49A7E00B30AF3 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A35688B21DC49A7E00B30AF3 /* Launch Screen.storyboard */; };
+		A35AC2B01DD76DD10005FD39 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A35AC2AE1DD76DAF0005FD39 /* libsqlite3.tbd */; };
+		A35AC2B11DD76DF60005FD39 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A35AC2AE1DD76DAF0005FD39 /* libsqlite3.tbd */; };
 		A36DB9281DC5A343005EDFA0 /* CDMCoreDataContextManagerConfigrationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A36DB9271DC5A343005EDFA0 /* CDMCoreDataContextManagerConfigrationTest.m */; };
 		A3A44D531DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3A44D511DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld */; };
 		A3A44D551DC5CE4100884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3A44D511DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld */; };
@@ -77,6 +79,7 @@
 		A35688AE1DC497B200B30AF3 /* ExampleData+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ExampleData+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A35688AF1DC497B200B30AF3 /* ExampleData+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ExampleData+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A35688B21DC49A7E00B30AF3 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		A35AC2AE1DD76DAF0005FD39 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A36DB9271DC5A343005EDFA0 /* CDMCoreDataContextManagerConfigrationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDMCoreDataContextManagerConfigrationTest.m; sourceTree = "<group>"; };
 		A3A44D521DC5C93400884F85 /* CoreDataContextManagerExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataContextManagerExample.xcdatamodel; sourceTree = "<group>"; };
 		A3A44D541DC5C94300884F85 /* CoreDataContextManagerExample 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CoreDataContextManagerExample 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -91,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A35AC2B01DD76DD10005FD39 /* libsqlite3.tbd in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
@@ -102,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A35AC2B11DD76DF60005FD39 /* libsqlite3.tbd in Frameworks */,
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
@@ -147,6 +152,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A35AC2AE1DD76DAF0005FD39 /* libsqlite3.tbd */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
