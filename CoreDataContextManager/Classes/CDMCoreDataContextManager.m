@@ -72,6 +72,9 @@
 }
 
 - (instancetype _Nonnull)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType options:(CDMCoreDataContextManagerOptions)options DEPRECATED_ATTRIBUTE {
+    if (directory == nil) {
+        directory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    }
     CDMCoreDataContextManagerConfiguration *config = [[CDMCoreDataContextManagerConfiguration alloc] initWithStoreType:storeType];
     config.autoSave = (options & CDMCoreDataContextManagerOptionsAutoSave);
     [config setMappingModelURLWithDatabaseName:databaseName];
