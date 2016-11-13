@@ -16,8 +16,8 @@
     data.updatedAt = [NSDate date];
     
     NSError *error = nil;
-    if ([context save:&error]) {
-        NSLog(@"%@", error);
+    if (![context save:&error]) {
+        NSLog(@"Save Error: %@", error);
     }
     return data;
 }

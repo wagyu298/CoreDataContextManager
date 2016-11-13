@@ -3,7 +3,7 @@
 
 @import UIKit;
 
-#import "CDMCoreDataContextManager.h"
+#import <CoreDataContextManager/CoreDataContextManager.h>
 
 @interface CDMAppDelegate : UIResponder <UIApplicationDelegate>
 

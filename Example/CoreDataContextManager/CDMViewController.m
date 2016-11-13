@@ -26,6 +26,11 @@
     CDMAppDelegate *appDelegate = [CDMAppDelegate appDelegate];
     self.managedObjectContext = appDelegate.coreDataContextManager.managedObjectContext;
     
+    NSError *error = nil;
+    if (![self.managedObjectContext cdm_deleteWithEntityName:@"ExampleData" error:&error]) {
+        NSLog(@"delete error: %@", error);
+    }
+    
     self.number = 0;
     for (int i = 0; i < 20; ++i) {
         [ExampleData createWithTitle:@"created" section:@"created" number:++self.number];
@@ -62,7 +67,7 @@
     
     NSError *error = nil;
     if (![_fetchedResultsController performFetch:&error]) {
-        NSLog(@"%@", error);
+        NSLog(@"Fetch Error: %@", error);
     }
     
     return _fetchedResultsController;
@@ -114,7 +119,7 @@
             data.section = @"updated";
             NSError *error = nil;
             if (![[CDMAppDelegate appDelegate].coreDataContextManager.managedObjectContext save:&error]) {
-                NSLog(@"%@", error);
+                NSLog(@"Save Error: %@", error);
             }
         }
     }

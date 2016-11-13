@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'CoreDataContextManager'
   s.version          = '0.0.11'
-  s.summary          = 'CoreData helpers for database auto-migration and multi threading.'
+  s.summary          = 'CoreData helpers with lightweight migration and multi threading.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
 CoreDataContextManager is CoreData helper library.
 It provides the following features:
 
-- Auto-migration with xcdatamodel file versions
+- Automatically apply lightweight migration with xcdatamodel file versions
 - Multi threading with context management
 - General implementation of NSFetchedResultsControllerDelegate
 
