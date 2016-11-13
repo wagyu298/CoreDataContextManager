@@ -71,29 +71,6 @@
     return [self initWithInMemoryDatabaseName:databaseName autoSave:YES];
 }
 
-- (instancetype _Nonnull)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType options:(CDMCoreDataContextManagerOptions)options DEPRECATED_ATTRIBUTE {
-    if (directory == nil) {
-        directory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-    }
-    CDMCoreDataContextManagerConfiguration *config = [[CDMCoreDataContextManagerConfiguration alloc] initWithStoreType:storeType];
-    config.autoSave = (options & CDMCoreDataContextManagerOptionsAutoSave);
-    [config setMappingModelURLWithDatabaseName:databaseName];
-    [config setPersistentStoreURLWithStoreType:storeType directoryURL:directory databaseName:databaseName];
-    return [self initWithConfiguration:config];
-}
-
-- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType DEPRECATED_ATTRIBUTE {
-    return [self initWithDatabaseName:databaseName directory:nil storeType:storeType options:CDMCoreDataContextManagerOptionsDefault];
-}
-
-- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName options:(CDMCoreDataContextManagerOptions)options DEPRECATED_ATTRIBUTE {
-    return [self initWithDatabaseName:databaseName directory:nil storeType:NSSQLiteStoreType options:options];
-}
-
-- (instancetype)initWithDatabaseName:(NSString * _Nonnull)databaseName DEPRECATED_ATTRIBUTE {
-    return [self initWithDatabaseName:databaseName directory:nil storeType:NSSQLiteStoreType options:CDMCoreDataContextManagerOptionsDefault];
-}
-
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -159,18 +136,6 @@
 
 - (NSManagedObjectContext * _Nonnull)createBackgroundContext {
     return [self.managedObjectContext cdm_createChildManagedObjectContext];
-}
-
-- (NSManagedObjectContext * _Nonnull)currentManagedObjectContext {
-    if ([NSThread isMainThread]) {
-        return self.managedObjectContext;
-    } else {
-        return [self createBackgroundContext];
-    }
-}
-
-- (BOOL)saveIfChanged:(NSError **)error {
-    return [self.managedObjectContext cdm_saveChanges:error];
 }
 
 #pragma mark - Properties
