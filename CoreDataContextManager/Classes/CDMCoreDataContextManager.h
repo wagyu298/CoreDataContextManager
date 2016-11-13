@@ -89,11 +89,6 @@ typedef NS_OPTIONS(NSUInteger, CDMCoreDataContextManagerOptions) {
  */
 - (instancetype _Nonnull)initWithInMemoryDatabaseName:(NSString * _Nonnull)databaseName;
 
-- (instancetype _Nonnull)initWithDatabaseName:(NSString * _Nonnull)databaseName directory:(NSURL * _Nullable)directory storeType:(NSString * _Nonnull)storeType options:(CDMCoreDataContextManagerOptions)options DEPRECATED_ATTRIBUTE;
-- (instancetype _Nonnull)initWithDatabaseName:(NSString * _Nonnull)databaseName storeType:(NSString * _Nonnull)storeType DEPRECATED_ATTRIBUTE;
-- (instancetype _Nonnull)initWithDatabaseName:(NSString * _Nonnull)databaseName options:(CDMCoreDataContextManagerOptions)options DEPRECATED_ATTRIBUTE;
-- (instancetype _Nonnull)initWithDatabaseName:(NSString * _Nonnull)databaseName DEPRECATED_ATTRIBUTE;
-
 /*!
  @brief Create NSManagedObjectContext to running background thread
  @return NSManagedObjectContext object configured with background thread
@@ -105,14 +100,5 @@ typedef NS_OPTIONS(NSUInteger, CDMCoreDataContextManagerOptions) {
  @endcode
  */
 - (NSManagedObjectContext * _Nonnull)createBackgroundContext;
-
-- (NSManagedObjectContext * _Nonnull)currentManagedObjectContext DEPRECATED_ATTRIBUTE;
-
-/*!
- @brief Execute @c[managedObjectContext save:] if the managed object context has changes
- @param error NSError instance if error occured
- @return YES if success, otherwise NO
- */
-- (BOOL)saveIfChanged:(NSError * _Nullable * _Nullable)error DEPRECATED_ATTRIBUTE;
 
 @end
