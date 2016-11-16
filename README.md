@@ -4,6 +4,13 @@ CoreData helpers with lightweight migration and multi threading.
 
 [![Build Status](https://travis-ci.org/wagyu298/CoreDataContextManager.svg?branch=master)](https://travis-ci.org/wagyu298/CoreDataContextManager)
 
+## Features
+
+- Automatically apply lightweight migration with xcdatamodel file versions
+- Multi threading with context management
+- General implementation of NSFetchedResultsControllerDelegate
+- Useful helper category methods for NSManagedObjectContext
+
 ## Usage
 
 Add CDMCoreDataContextManager to your AppDelegate class and initialize it in
@@ -129,3 +136,20 @@ To disable this feature, call constructor with `autoSave:NO` argument.
 
 CoreDataContextManager includes general implementation of FetchedResultsControllerDelegate.
 See example application in repository for more details.
+
+### NSManagedObjectContext helper methods
+
+CoreDataContextManager add `NSManagedObjectContext (CoreDataContextManager)` category.
+The category contains the following methods.
+
+```
+// Create child managed object context for multithreading,
+// same as [CoreDataContextManager createBackgroundContext]
+- (NSManagedObjectContext * _Nonnull)cdm_createChildManagedObjectContext;
+
+// Save if NSManagedObjectContext has changed
+- (BOOL)cdm_saveChanges:(NSError * _Nullable * _Nullable)error;
+
+// Delete all entity objects
+- (BOOL)cdm_deleteWithEntityName:(NSString * _Nonnull)entityName error:(NSError * _Nullable * _Nullable)error;
+```

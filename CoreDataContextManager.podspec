@@ -24,6 +24,7 @@ It provides the following features:
 - Automatically apply lightweight migration with xcdatamodel file versions
 - Multi threading with context management
 - General implementation of NSFetchedResultsControllerDelegate
+- Useful helper category methods for NSManagedObjectContext
 
 See GitHub for usage and more details.
                        DESC

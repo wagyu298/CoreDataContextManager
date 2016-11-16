@@ -15,7 +15,7 @@
 - (NSManagedObjectContext * _Nonnull)cdm_createChildManagedObjectContext;
 
 /*!
- @brief save if NSManagedObjectContext has changed
+ @brief Save if NSManagedObjectContext has changed
  @param error A error pointer
  @return YES if success, otherwise NO
  */
