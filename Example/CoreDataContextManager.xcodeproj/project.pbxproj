@@ -35,6 +35,7 @@
 		A3A44D531DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3A44D511DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld */; };
 		A3A44D551DC5CE4100884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3A44D511DC5C93400884F85 /* CoreDataContextManagerExample_v1.xcdatamodeld */; };
 		DE93985D0815A59397D965B5 /* Pods_CoreDataContextManager_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6DC7A3030B7776DA7F2E2FF /* Pods_CoreDataContextManager_Tests.framework */; };
+		FEEA5C191DDC658800CFDD57 /* NSManagedObjectContext+CoreDataContextManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FEEA5C181DDC658800CFDD57 /* NSManagedObjectContext+CoreDataContextManagerTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		C0C66569B878F4E7958898A4 /* Pods-CoreDataContextManager_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataContextManager_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataContextManager_Tests/Pods-CoreDataContextManager_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D49110A554D03C9FBFFD47BB /* Pods-CoreDataContextManager_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataContextManager_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataContextManager_Tests/Pods-CoreDataContextManager_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		F46B81D9A37F4FFA75CB3712 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		FEEA5C181DDC658800CFDD57 /* NSManagedObjectContext+CoreDataContextManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+CoreDataContextManagerTests.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 			children = (
 				6003F5BB195388D20070C39A /* CDMCoreDataContextManagerTests.m */,
 				A36DB9271DC5A343005EDFA0 /* CDMCoreDataContextManagerConfigrationTest.m */,
+				FEEA5C181DDC658800CFDD57 /* NSManagedObjectContext+CoreDataContextManagerTests.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -347,7 +350,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		48C3BFCE6691565EFBBF9082 /* [CP] Embed Pods Frameworks */ = {
@@ -392,7 +395,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		DAA1C59EFD00CBB9153352C0 /* [CP] Copy Pods Resources */ = {
@@ -450,6 +453,7 @@
 				A332FA401DC4A98F00463C2D /* ExampleData+CoreDataProperties.m in Sources */,
 				6003F5BC195388D20070C39A /* CDMCoreDataContextManagerTests.m in Sources */,
 				A332FA3F1DC4A98C00463C2D /* ExampleData+CoreDataClass.m in Sources */,
+				FEEA5C191DDC658800CFDD57 /* NSManagedObjectContext+CoreDataContextManagerTests.m in Sources */,
 				A36DB9281DC5A343005EDFA0 /* CDMCoreDataContextManagerConfigrationTest.m in Sources */,
 				A332FA3E1DC4A4FA00463C2D /* CoreDataContextManagerExample.xcdatamodeld in Sources */,
 			);
@@ -606,7 +610,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
@@ -630,7 +633,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);

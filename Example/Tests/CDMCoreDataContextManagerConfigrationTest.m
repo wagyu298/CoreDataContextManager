@@ -1,10 +1,5 @@
-//
-//  CDMCoreDataContextManagerConfigrationTest.m
-//  CoreDataContextManager
-//
-//  Created by wagyu298 on 2016/10/30.
-//  Copyright © 2016年 wagyu298. All rights reserved.
-//
+// This software is released under the MIT License.
+// http://opensource.org/licenses/mit-license.php
 
 #import <CoreDataContextManager/CoreDataContextManager.h>
 
