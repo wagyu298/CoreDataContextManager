@@ -9,10 +9,10 @@
 @interface NSManagedObjectContext (CoreDataContextManager)
 
 /*!
- @brief Create child managed object context for multithreading
+ @brief Create background thread context
  @return A NSManagedObjectContext object
  */
-- (NSManagedObjectContext * _Nonnull)cdm_createChildManagedObjectContext;
+- (NSManagedObjectContext * _Nonnull)cdm_createBackgroundContext;
 
 /*!
  @brief Save if NSManagedObjectContext has changed

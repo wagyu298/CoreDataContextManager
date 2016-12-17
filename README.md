@@ -143,9 +143,14 @@ CoreDataContextManager add `NSManagedObjectContext (CoreDataContextManager)` cat
 The category contains the following methods.
 
 ```
-// Create child managed object context for multithreading,
-// same as [CoreDataContextManager createBackgroundContext]
-- (NSManagedObjectContext * _Nonnull)cdm_createChildManagedObjectContext;
+// Create managed object context for background thread.
+// It is same as [CoreDataContextManager createBackgroundContext] if
+// you call for CoreDataContextManager's managedObjectContext property,
+// otherwise returing NSManagedObjectContext is setup for background thread
+// and child of `this` NSManagedObjectContext but you should observe
+// NSManagedObjectContextDidSaveNotification and import updates from
+// the background thread by mergeChangesFromContextDidSaveNotification method.
+- (NSManagedObjectContext * _Nonnull)cdm_createBackgroundContext;
 
 // Save if NSManagedObjectContext has changed
 - (BOOL)cdm_saveChanges:(NSError * _Nullable * _Nullable)error;
