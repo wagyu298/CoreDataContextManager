@@ -6,6 +6,7 @@ CoreData helpers with lightweight migration and multi threading.
 [![Version](https://img.shields.io/cocoapods/v/CoreDataContextManager.svg?style=flat)](http://cocoapods.org/pods/CoreDataContextManager)
 [![License](https://img.shields.io/cocoapods/l/CoreDataContextManager.svg?style=flat)](http://cocoapods.org/pods/CoreDataContextManager)
 [![Platform](https://img.shields.io/cocoapods/p/CoreDataContextManager.svg?style=flat)](http://cocoapods.org/pods/CoreDataContextManager)
+[![Conventional Changelog](https://img.shields.io/badge/changelog-conventional-brightgreen.svg)](https://github.com/wagyu298/CoreDataContextManager/blob/master/CHANGELOG.md)
 
 ## Features
 
