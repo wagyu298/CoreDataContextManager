@@ -6,7 +6,7 @@
 @implementation NSManagedObjectContext (CoreDataContextManager)
 
 // Create background thread context
-- (NSManagedObjectContext * _Nonnull)cdm_createChildManagedObjectContext {
+- (NSManagedObjectContext * _Nonnull)cdm_createBackgroundContext {
     NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     NSManagedObjectContext *parentContext = self.parentContext;
     if (!parentContext) {

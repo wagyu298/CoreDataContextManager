@@ -135,7 +135,7 @@
 }
 
 - (NSManagedObjectContext * _Nonnull)createBackgroundContext {
-    return [self.managedObjectContext cdm_createChildManagedObjectContext];
+    return [self.managedObjectContext cdm_createBackgroundContext];
 }
 
 #pragma mark - Properties

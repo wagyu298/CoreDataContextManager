@@ -6,7 +6,7 @@
 
 SpecBegin(NSManagedObjectContext)
 
-describe(@"cdm_createChildManagedObjectContext", ^{
+describe(@"cdm_createBackgroundContext", ^{
     
     __block CDMCoreDataContextManager *manager;
     
@@ -16,7 +16,7 @@ describe(@"cdm_createChildManagedObjectContext", ^{
     
     it(@"create data from child thread", ^{
         waitUntil(^(DoneCallback done) {
-            NSManagedObjectContext *context = [manager createBackgroundContext];
+            NSManagedObjectContext *context = [manager.managedObjectContext cdm_createBackgroundContext];
             [context performBlock:^{
                 ExampleData *data = [NSEntityDescription insertNewObjectForEntityForName:@"ExampleData" inManagedObjectContext:context];
                 data.title = @"title";
