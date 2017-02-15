@@ -120,9 +120,11 @@ with information from a managed object at the given index path in the fetched re
         case NSFetchedResultsChangeUpdate:
             if ([self canUpdateWithTableView:tableView indexPath:indexPath]) {
                 NSObject <CDMFetchedResultsControllerDelegateDataSource> *dataSource = (NSObject <CDMFetchedResultsControllerDelegateDataSource> *)tableView.dataSource;
-                UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-                if (cell != nil) {
-                    [dataSource configureCell:cell atIndexPath:indexPath];
+                if (indexPath != nil) {
+                    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+                    if (cell != nil) {
+                        [dataSource configureCell:cell atIndexPath:indexPath];
+                    }
                 }
             }
             break;
