@@ -23,6 +23,9 @@ typedef NS_OPTIONS(NSUInteger, CDMCoreDataContextManagerOptions) {
 /// @brief A NSManagedObjectContext object that managed under CDMCoreDataContextManager
 @property (nonnull, nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 
+/// @brief A NSManagedObjectContext object for current thread
+@property (nonnull, nonatomic, strong, readonly) NSManagedObjectContext *currentContext;
+
 /// @brief NSPersistentStoreCoordinator for creating managedObjectContext
 @property (nonnull, nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 

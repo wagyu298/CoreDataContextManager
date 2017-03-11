@@ -117,6 +117,53 @@ describe(@"CDMCoreDataContextManager", ^{
         expect(data.number).to.equal(1);
     });
     
+    describe(@"currentContext", ^{
+        it(@"w/ main thread", ^{
+            expect(manager.currentContext).to.equal(manager.managedObjectContext);
+        });
+        
+        it(@"create data w/ current thread context", ^{
+            NSManagedObjectContext *managedContext = manager.managedObjectContext;
+            
+            waitUntil(^(DoneCallback done) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    NSManagedObjectContext *context = [manager currentContext];
+                    expect(managedContext).notTo.equal(context);
+                    expect([manager currentContext]).to.equal(context);
+                    
+                    [context performBlock:^{
+                        ExampleData *data = [NSEntityDescription insertNewObjectForEntityForName:@"ExampleData" inManagedObjectContext:context];
+                        data.title = @"title";
+                        data.section = @"section";
+                        data.number = 1;
+                        data.updatedAt = [NSDate date];
+                        
+                        NSError *error = nil;
+                        BOOL rv = [context save:&error];
+                        expect(rv).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        done();
+                    }];
+                });
+            });
+            
+            NSManagedObjectContext *context = manager.managedObjectContext;
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            [request setEntity:[NSEntityDescription entityForName:@"ExampleData" inManagedObjectContext:context]];
+            
+            NSError *error = nil;
+            NSArray *results = [context executeFetchRequest:request error:&error];
+            expect(results).to.beTruthy();
+            expect(error).to.beNil();
+            expect([results count]).to.equal(1);
+            ExampleData *data = results[0];
+            expect(data.title).to.equal(@"title");
+            expect(data.section).to.equal(@"section");
+            expect(data.number).to.equal(1);
+        });
+    });
+    
 });
 
 describe(@"Light weight migration", ^{

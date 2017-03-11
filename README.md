@@ -112,7 +112,11 @@ You can add model version from Xcode menu `Editor -> Add Model Version...`.
 
 ### Multi threading
 
-You can create NSManagedObjectContext for background thread by `[coreDataContextManager createBackgroundContext]` method.
+You have two options to get NSManagedObjectContext for current thread.
+One of that is `coreDataContext.currentContext` property, another one is `[coreDataContextManager createBackgroundContext]`.
+Normally, `coreDataContext.currentContext` better choise than combination of `[coreDataContextManager createBackgroundContext]` and `coreDataContextManager.managedObjectContext` to get NSMangedObjectContext object.
+
+`[coreDataContextManager createBackgroundContext]` create NSManagedObjectContext for background thread.
 
 ```
 NSManagedObjectContext *managedObjectContext = [self.coreDataContextManager createBackgroundContext];
@@ -130,6 +134,9 @@ NSManagedObjectContext *managedObjectContext = [self.coreDataContextManager crea
 `[managedObjectContext save:]` will trigger mergeChangesFromContextDidSaveNotification with main context.
 CoreDataContextManager object observe NSManagedObjectContextDidSaveNotification notifiation and merge changes from background thread into the database.
 (You does not need to do anything after [managedObjectContext save:] in background thread.)
+
+`coreDataContext.currentContext` is very simular to `[coreDataContextManager createBackgroundContext]`, but it does not create new NSMangedObjectContext object if NSMangedObjectContext object is already created for the current thread.
+You can always replace `[coreDataContextManager createBackgroundContext]` by `coreDataContext.currentContext`.
 
 ### Auto save when app resign active
 

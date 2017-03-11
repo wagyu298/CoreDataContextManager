@@ -5,12 +5,15 @@
 #import "CDMCoreDataContextManager.h"
 #import "NSManagedObjectContext+CoreDataContextManager.h"
 
+static const NSString * const ThreadKeyPrefix = @"CDMCoreDataContextManager:currentContext";
+
 @interface CDMCoreDataContextManager ()
 
 @end
 
 @implementation CDMCoreDataContextManager
 
+@dynamic currentContext;
 @dynamic persistentStoreCoordinator;
 @dynamic managedObjectModel;
 
@@ -146,6 +149,30 @@
 
 - (NSManagedObjectModel *)managedObjectModel {
     return self.managedObjectContext.persistentStoreCoordinator.managedObjectModel;
+}
+
+#pragma mark - NSThread helper
+
+- (NSString *)threadKey {
+    NSString *key = [NSString stringWithFormat:@"%@:%@:%@", ThreadKeyPrefix, self.managedObjectContext.description, [NSThread currentThread].description];
+    return key;
+}
+
+- (NSManagedObjectContext *)currentContext {
+    if ([NSThread isMainThread]) {
+        return self.managedObjectContext;
+    }
+    
+    NSThread *thread = [NSThread currentThread];
+    NSString *threadKey = [self threadKey];
+    NSManagedObjectContext *context = thread.threadDictionary[threadKey];
+    if (context) {
+        return context;
+    }
+    
+    context = [self.managedObjectContext cdm_createBackgroundContext];
+    thread.threadDictionary[threadKey] = context;
+    return context;
 }
 
 @end
