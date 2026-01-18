@@ -222,9 +222,9 @@ describe(@"Light weight migration", ^{
             expect(info[1][@"name"]).to.equal(@"Z_ENT");
             expect(info[2][@"name"]).to.equal(@"Z_OPT");
             expect(info[3][@"name"]).to.equal(@"ZNUMBER");
-            expect(info[4][@"name"]).to.equal(@"ZUPDATEDAT");
-            expect(info[5][@"name"]).to.equal(@"ZSECTION");
-            expect(info[6][@"name"]).to.equal(@"ZTITLE");
+            expect(info[4][@"name"]).to.equal(@"ZSECTION");
+            expect(info[5][@"name"]).to.equal(@"ZTITLE");
+            expect(info[6][@"name"]).to.equal(@"ZUPDATEDAT");
             sqlite3_close(db);
         }
     });

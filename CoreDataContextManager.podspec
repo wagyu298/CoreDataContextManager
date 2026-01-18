@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CoreDataContextManager'
-  s.version          = '0.1.3'
+  s.version          = '0.1.4'
   s.summary          = 'CoreData helpers with lightweight migration and multi threading.'
 
 # This description is used to generate tags and improve search results.
@@ -36,13 +36,13 @@ See GitHub for usage and more details.
   s.source           = { :git => 'https://github.com/wagyu298/CoreDataContextManager.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/wagyu298'
 
-  s.ios.deployment_target = '7.1'
+  s.ios.deployment_target = '12.0'
 
-  s.source_files = 'CoreDataContextManager/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'CoreDataContextManager' => ['CoreDataContextManager/Assets/*.png']
-  # }
+  s.source_files = 'CoreDataContextManager/Classes/**/*.{h,m}'
+
+  s.resource_bundles = {
+    'CoreDataContextManager' => ['CoreDataContextManager/Classes/PrivacyInfo.xcprivacy']
+  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

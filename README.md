@@ -19,7 +19,7 @@ CoreData helpers with lightweight migration and multi threading.
 CoreDataContextManager is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
-pod "CoreDataContextManager"
+pod 'CoreDataContextManager', :git => 'https://github.com/wagyu298/CoreDataContextManager.git'
 ```
 
 ## License
