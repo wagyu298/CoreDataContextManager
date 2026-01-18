@@ -89,8 +89,8 @@
     if (context != _managedObjectContext && context.parentContext == _managedObjectContext) {
         [_managedObjectContext performBlock:^{
             NSError *error = nil;
-            [_managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-            if (![_managedObjectContext save:&error]) {
+            [self->_managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+            if (![self->_managedObjectContext save:&error]) {
                 NSLog(@"Unresolved error %@", error);
             }
         }];
