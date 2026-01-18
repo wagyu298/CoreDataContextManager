@@ -1,5 +1,5 @@
 PODS:
-  - CoreDataContextManager (0.0.11)
+  - CoreDataContextManager (0.1.3)
   - Expecta (1.0.5)
   - Specta (1.0.5)
 
@@ -8,15 +8,20 @@ DEPENDENCIES:
   - Expecta
   - Specta
 
+SPEC REPOS:
+  trunk:
+    - Expecta
+    - Specta
+
 EXTERNAL SOURCES:
   CoreDataContextManager:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CoreDataContextManager: 376703646913a457c7b87476de53784eee79559c
+  CoreDataContextManager: 2bd97481f1aaf9b91c94ad0d0a5eae232d38323a
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
 
-PODFILE CHECKSUM: e19a1754cfb65c8aa80cb5bd998143bd8268e468
+PODFILE CHECKSUM: aa6af8f20adcf54679c8f67baa22c3398e535a68
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.16.2
